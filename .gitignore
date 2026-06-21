@@ -1,0 +1,21 @@
+# WorkBuddy internal
+.workbuddy/
+
+# macOS
+.DS_Store
+._*
+
+# Temp / build scripts
+build_multilang.py
+multilang_data.json
+multilang_js_data.js
+lang_viz.js
+chinese_versions_data.json
+chinese_versions_js.js
+gts_describe_data.json
+gts_describe_js.js
+case_mapping_table.json
+
+# IDE
+.vscode/
+.idea/
