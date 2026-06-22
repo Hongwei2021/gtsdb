@@ -1528,7 +1528,7 @@ window.toggleValidation = function() {
     });
 
     var xS = d3.scaleLinear().domain([2007, 2022]).range([0, innerW]);
-    var yS = d3.scaleLinear().domain([140, 65]).range([innerH, 0]);
+    var yS = d3.scaleLinear().domain([160, 65]).range([innerH, 0]);
 
     svg.append('g')
       .call(d3.axisLeft(yS).ticks(8).tickSize(-innerW).tickFormat(''))
