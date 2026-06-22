@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>References — GTSKG</title>
+<title>GTSKG — References</title>
 <style>
 :root {
   --bg: #0a0e14;
@@ -48,6 +48,17 @@ nav .links a.active { color: var(--accent); }
   font-family: var(--font); transition: all 0.2s; margin-left: 8px;
 }
 .lang-btn:hover { color: var(--text-bright); border-color: var(--accent); }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  background: none; border: none; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 22px; height: 2px; background: var(--text-dim);
+  border-radius: 2px; transition: all 0.25s;
+}
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 [data-i18n] { transition: opacity 0.2s; }
 
 /* Section layout */
@@ -132,10 +143,20 @@ nav .links a.active { color: var(--accent); }
 /* Mobile */
 @media (max-width: 768px) {
   nav { padding: 0 12px; }
-  nav .links { gap: 12px; }
+  nav .links { display: none; position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+    background: var(--bg); flex-direction: column; padding: 16px 24px; gap: 18px;
+    z-index: 999; overflow-y: auto; }
+  nav .links.open { display: flex; }
+  .hamburger { display: flex !important; }
   .page { padding: 80px 12px 40px; }
   .ref-table th:nth-child(2), .ref-table td:nth-child(2) { display: none; }
 }
+
+/* Footer */
+footer { text-align: center; padding: 28px 16px; border-top: 1px solid var(--border); margin-top: 40px; }
+footer p { margin: 0 0 6px; font-size: 12px; color: var(--text-dim); }
+footer a { color: var(--accent); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -147,6 +168,9 @@ nav .links a.active { color: var(--accent); }
     <li><a href="gts_describe.html" data-i18n="nav.describe">Describe</a></li>
     <li><a href="references.html" class="active" data-i18n="nav.references">References</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <button class="lang-btn" id="lang-btn" onclick="toggleLang()" title="切换中文">中</button>
 </nav>
 
@@ -347,7 +371,18 @@ function applyLang(lang) {
     toggleLang();
   }
 })();
+
+window.toggleMenu = function() {
+  var btn = document.getElementById('hamburger');
+  var links = document.querySelector('nav .links');
+  btn.classList.toggle('open');
+  links.classList.toggle('open');
+};
 </script>
+
+<footer>
+  <p><strong>GTSKG</strong> &nbsp;·&nbsp; Data: <a href="https://github.com/Hongwei2021/gtsdb" target="_blank">GitHub</a> &nbsp;·&nbsp; <a href="https://stratigraphy.org" target="_blank">ICS</a> &nbsp;·&nbsp; <a href="https://timescalecreator.org" target="_blank">TSCreator</a></p>
+</footer>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GTS Describe — Etymology &amp; Earth Timeline</title>
+<title>GTSKG — Etymology &amp; Earth Timeline</title>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <style>
 :root {
@@ -48,6 +48,17 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
   font-family: var(--font); transition: all 0.2s; margin-left: 8px;
 }
 .lang-btn:hover { color: var(--text-bright); border-color: var(--accent); }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  background: none; border: none; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 22px; height: 2px; background: var(--text-dim);
+  border-radius: 2px; transition: all 0.25s;
+}
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 [data-i18n] { transition: opacity 0.2s; }
 
 /* Section headers */
@@ -135,6 +146,34 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
 .timeline-zoom button:hover { color: var(--text-bright); border-color: var(--accent); }
 .timeline-info { font-size: 12px; color: var(--text-dim); margin-left: auto; }
 
+/* Timeline detail modal */
+.tl-modal-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;
+}
+.tl-modal-overlay.show { display: flex; }
+.tl-modal {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 28px 32px; max-width: 560px; width: 90%; max-height: 80vh; overflow-y: auto;
+  position: relative; box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+.tl-modal-close {
+  position: absolute; top: 12px; right: 16px;
+  background: none; border: none; color: var(--text-dim); font-size: 24px;
+  cursor: pointer; line-height: 1; padding: 0;
+}
+.tl-modal-close:hover { color: var(--text-bright); }
+.tl-modal-date {
+  font-size: 28px; font-weight: 800; color: var(--accent); margin-bottom: 8px;
+}
+.tl-modal-age {
+  font-size: 14px; color: var(--text-dim); margin-bottom: 20px;
+}
+.tl-modal-body {
+  font-size: 15px; color: var(--text); line-height: 1.75;
+}
+.tl-modal-body a { color: var(--accent); }
+
 .timeline-svg-wrap {
   background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
   overflow: hidden; position: relative;
@@ -159,7 +198,18 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
   .header h1 { font-size: 17px; }
   .section { padding: 24px 12px; }
   .etymology-grid { grid-template-columns: 1fr; }
+  .header nav { display: none; position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+    background: var(--bg); flex-direction: column; padding: 16px 24px; gap: 14px;
+    z-index: 999; overflow-y: auto; }
+  .header nav.open { display: flex; }
+  .hamburger { display: flex !important; }
 }
+
+/* Footer */
+footer { text-align: center; padding: 28px 16px; border-top: 1px solid var(--border); margin-top: 40px; }
+footer p { margin: 0 0 6px; font-size: 12px; color: var(--text-dim); }
+footer a { color: var(--accent); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -172,6 +222,9 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
     <a href="#etymology" class="active" data-i18n="nav.etymology">📖 Etymology</a>
     <a href="#timeline" data-i18n="nav.timeline">⏳ Earth Timeline</a>
   </nav>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <button class="lang-btn" id="lang-btn" onclick="toggleLang()" title="切换中文">中</button>
 </header>
 
@@ -416,11 +469,15 @@ function getEraForMa(ma) {
         .attr('x', isLeft ? labelX - 280 : labelX).attr('y', y - 12)
         .attr('width', 280).attr('height', 24)
         .attr('fill', 'transparent')
+        .attr('style', 'cursor:pointer')
         .on('mouseenter', function() {
           d3.select(this).attr('fill', 'rgba(99,179,237,0.1)');
         })
         .on('mouseleave', function() {
           d3.select(this).attr('fill', 'transparent');
+        })
+        .on('click', function() {
+          showTimelineModal(e);
         })
         .append('title').text(e.date_original + ': ' + e.event);
     });
@@ -552,7 +609,41 @@ function applyLang(lang) {
     toggleLang();
   }
 })();
+
+window.toggleMenu = function() {
+  var btn = document.getElementById('hamburger');
+  var nav = document.querySelector('.header nav');
+  btn.classList.toggle('open');
+  nav.classList.toggle('open');
+};
+
+window.showTimelineModal = function(eventData) {
+  document.getElementById('tl-modal-date').textContent = eventData.date_original;
+  document.getElementById('tl-modal-age').textContent = eventData.ma + ' Ma';
+  document.getElementById('tl-modal-body').innerHTML = eventData.event;
+  document.getElementById('tl-modal-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeTimelineModal = function(e) {
+  if (e && e.target !== document.getElementById('tl-modal-overlay')) return;
+  document.getElementById('tl-modal-overlay').classList.remove('show');
+  document.body.style.overflow = '';
+};
 </script>
+
+<div class="tl-modal-overlay" id="tl-modal-overlay" onclick="closeTimelineModal(event)">
+  <div class="tl-modal" id="tl-modal" onclick="event.stopPropagation()">
+    <button class="tl-modal-close" onclick="closeTimelineModal()">&times;</button>
+    <div class="tl-modal-date" id="tl-modal-date"></div>
+    <div class="tl-modal-age" id="tl-modal-age"></div>
+    <div class="tl-modal-body" id="tl-modal-body"></div>
+  </div>
+</div>
+
+<footer>
+  <p><strong>GTSKG</strong> &nbsp;·&nbsp; Data: <a href="https://github.com/Hongwei2021/gtsdb" target="_blank">GitHub</a> &nbsp;·&nbsp; <a href="https://stratigraphy.org" target="_blank">ICS</a> &nbsp;·&nbsp; <a href="https://timescalecreator.org" target="_blank">TSCreator</a></p>
+</footer>
 
 </body>
 </html>
