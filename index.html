@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GTSKG — Geological Time Scale Knowledge Graph</title>
+<title>GTSKG — Geologic Time Scale Knowledge Graph</title>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <style>
 :root {
@@ -45,6 +45,14 @@ nav .links a {
   transition: color 0.2s; font-weight: 500;
 }
 nav .links a:hover { color: var(--text-bright); }
+.lang-btn {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text-dim); padding: 5px 10px; border-radius: 6px;
+  cursor: pointer; font-size: 12px; font-weight: 600;
+  font-family: var(--font); transition: all 0.2s; margin-left: 8px;
+}
+.lang-btn:hover { color: var(--text-bright); border-color: var(--accent); }
+[data-i18n] { transition: opacity 0.2s; }
 .hero {
   padding: 120px 24px 80px; text-align: center; max-width: 900px; margin: 0 auto;
 }
@@ -491,62 +499,63 @@ footer a { color: var(--accent); text-decoration: none; }
 <nav>
   <div class="logo">GTS<span>KG</span></div>
   <ul class="links">
-    <li><a href="#timescale">Time Scale</a></li>
-    <li><a href="#validation">Validation</a></li>
-    <li><a href="#cases">Cases</a></li>
-    <li><a href="#graph">Graph</a></li>
-    <li><a href="#evolution">Evolution</a></li>
-    <li><a href="#explorer">Explorer</a></li>
-    <li><a href="#languages">🌐 Languages</a></li>
-    <li><a href="gts_describe.html">📖 Describe</a></li>
-    <li><a href="references.html">📚 References</a></li>
+    <li><a href="#timescale" data-i18n="nav.timescale">Time Scale</a></li>
+    <li><a href="#validation" data-i18n="nav.validation">Validation</a></li>
+    <li><a href="#cases" data-i18n="nav.cases">Cases</a></li>
+    <li><a href="#graph" data-i18n="nav.graph">Graph</a></li>
+    <li><a href="#evolution" data-i18n="nav.evolution">Evolution</a></li>
+    <li><a href="#explorer" data-i18n="nav.explorer">Explorer</a></li>
+    <li><a href="#languages" data-i18n="nav.languages">🌐 Languages</a></li>
+    <li><a href="gts_describe.html" data-i18n="nav.describe">📖 Describe</a></li>
+    <li><a href="references.html" data-i18n="nav.references">📚 References</a></li>
   </ul>
+  <button class="lang-btn" id="lang-btn" onclick="toggleLang()" title="切换中文">中</button>
 </nav>
 
 <section class="hero">
-  <h1>Geological Time Scale<br><span>Knowledge Graph</span></h1>
-  <p>
-    Interactive visualization of the geological time scale across 102 versions
+  <h1 data-i18n="hero.title">Geologic Time Scale<br><span>Knowledge Graph</span></h1>
+  <p data-i18n="hero.desc">
+    Interactive visualization of the geologic time scale across 102 versions
     from 1879 to 2024. Post-2000 versions use pyrolite multi-column rendering;
     pre-2000 versions use classic stacked-column charts. Automatic data
     validation and correction included.
   </p>
   <div>
-    <span class="badge">Dual-Mode View</span>
-    <span class="badge">Pyrolite + Classic</span>
+    <span class="badge" data-i18n="badge.dual">Dual-Mode View</span>
+    <span class="badge" data-i18n="badge.pyrolite">Pyrolite + Classic</span>
     <span class="badge">D3.js</span>
-    <span class="badge">Knowledge Graph</span>
-    <span class="badge">Multi-Version Explorer</span>
-    <span class="badge">ML Case Study</span>
-    <span class="badge">🌐 Multilingual</span>
+    <span class="badge" data-i18n="badge.kg">Knowledge Graph</span>
+    <span class="badge" data-i18n="badge.explorer">Multi-Version Explorer</span>
+    <span class="badge" data-i18n="badge.ml">ML Case Study</span>
+    <span class="badge" data-i18n="badge.multi">🌐 Multilingual</span>
   </div>
 </section>
 
 <div class="stats">
   <div class="stat-card">
     <div class="num" style="color:var(--accent)">102</div>
-    <div class="label">Versions</div>
+    <div class="label" data-i18n="stat.versions">Versions</div>
   </div>
   <div class="stat-card">
     <div class="num" style="color:var(--green)">10,723</div>
-    <div class="label">Total Records</div>
+    <div class="label" data-i18n="stat.records">Total Records</div>
   </div>
   <div class="stat-card">
     <div class="num" style="color:var(--orange)">46</div>
-    <div class="label">Swaps Fixed</div>
+    <div class="label" data-i18n="stat.swaps">Swaps Fixed</div>
   </div>
   <div class="stat-card">
     <div class="num" style="color:var(--purple)">145</div>
-    <div class="label">Years Tracked</div>
+    <div class="label" data-i18n="stat.years">Years Tracked</div>
   </div>
 </div>
 
 <section class="section" id="timescale">
-  <h2 class="section-title">Geological Time Scale</h2>
-  <p class="section-subtitle" id="timescale-subtitle">Select a version — post-2000 uses pyrolite multi-column view, pre-2000 uses classic stacked column</p>
+  <h2 class="section-title" data-i18n="section.timescale">Geologic Time Scale</h2>
+  <p class="section-subtitle" id="timescale-subtitle" data-i18n="section.timescale.sub">Select a version — post-2000 uses pyrolite multi-column view, pre-2000 uses classic stacked column</p>
   <div class="card">
     <div class="version-selector">
-      <label>Version:</label>
+      <label data-i18n="version.label">Version:</label>
       <select id="version-select" onchange="onVersionChange()"></select>
       <div class="version-info" id="version-info"></div>
       <span id="mode-badge" class="mode-badge"></span>
@@ -563,90 +572,90 @@ footer a { color: var(--accent); text-decoration: none; }
 </section>
 
 <section class="section" id="validation">
-  <h2 class="section-title">Data Validation</h2>
-  <p class="section-subtitle">Automatic detection and correction of data anomalies</p>
+  <h2 class="section-title" data-i18n="section.validation">Data Validation</h2>
+  <p class="section-subtitle" data-i18n="section.validation.sub">Automatic detection and correction of data anomalies</p>
   <div class="card">
     <div class="validation-summary">
-      <div class="vs-item"><span class="vs-dot" style="background:var(--orange)"></span> <strong id="swap-count">0</strong> Start/End swaps corrected</div>
-      <div class="vs-item"><span class="vs-dot" style="background:var(--red)"></span> <strong id="issue-count">0</strong> Issues detected</div>
+      <div class="vs-item"><span class="vs-dot" style="background:var(--orange)"></span> <strong id="swap-count">0</strong> <span data-i18n="validation.swaps">Start/End swaps corrected</span></div>
+      <div class="vs-item"><span class="vs-dot" style="background:var(--red)"></span> <strong id="issue-count">0</strong> <span data-i18n="validation.issues">Issues detected</span></div>
     </div>
     <div class="validation-toggle" onclick="toggleValidation()">
-      <span class="arrow">&#9654;</span> Swaps Detail (start &lt; end → automatically swapped)
+      <span class="arrow">&#9654;</span> <span data-i18n="validation.detail">Swaps Detail (start &lt; end → automatically swapped)</span>
     </div>
     <div class="validation-body" id="swap-body"></div>
   </div>
 </section>
 
 <section class="section" id="graph">
-  <h2 class="section-title">Version Knowledge Graph</h2>
-  <p class="section-subtitle">125 versions connected by 142 citation relationships — click a node to view its time scale</p>
+  <h2 class="section-title" data-i18n="section.kg">Version Knowledge Graph</h2>
+  <p class="section-subtitle" data-i18n="section.kg.sub">102 versions connected by 142 citation relationships — click a node to view its time scale</p>
   <div class="card" style="position:relative;">
     <div class="kg-search">
-      <input type="text" id="kg-search-input" placeholder="Search version..." oninput="kgSearch(this.value)" onfocus="kgSearch(this.value)" onblur="setTimeout(function(){document.getElementById('kg-results').classList.remove('show')},200)">
+      <input type="text" id="kg-search-input" data-i18n-placeholder="kg.search" placeholder="Search version..." oninput="kgSearch(this.value)" onfocus="kgSearch(this.value)" onblur="setTimeout(function(){document.getElementById('kg-results').classList.remove('show')},200)">
       <div class="kg-results" id="kg-results"></div>
     </div>
     <div class="kg-controls">
-      <button class="kg-btn" onclick="kgZoomIn()" title="Zoom in">+</button>
-      <button class="kg-btn" onclick="kgZoomOut()" title="Zoom out">−</button>
-      <button class="kg-btn" onclick="kgReset()" title="Reset view">⟲</button>
+      <button class="kg-btn" onclick="kgZoomIn()" data-i18n-title="kg.zoom.in" title="Zoom in">+</button>
+      <button class="kg-btn" onclick="kgZoomOut()" data-i18n-title="kg.zoom.out" title="Zoom out">−</button>
+      <button class="kg-btn" onclick="kgReset()" data-i18n-title="kg.zoom.reset" title="Reset view">⟲</button>
     </div>
-    <div class="kg-info-bar"><strong id="kg-node-count">125</strong> nodes · <strong>142</strong> edges</div>
+    <div class="kg-info-bar"><strong id="kg-node-count">102</strong> <span data-i18n="kg.nodes">nodes</span> · <strong>142</strong> <span data-i18n="kg.edges">edges</span></div>
     <div class="kg-legend">
-      <div class="kg-legend-item"><span class="kg-legend-dot" style="background:#4c51bf"></span> pre-1900</div>
-      <div class="kg-legend-item"><span class="kg-legend-dot" style="background:#4299e1"></span> 1900–1949</div>
-      <div class="kg-legend-item"><span class="kg-legend-dot" style="background:#48bb78"></span> 1950–1979</div>
-      <div class="kg-legend-item"><span class="kg-legend-dot" style="background:#ecc94b"></span> 1980–1999</div>
-      <div class="kg-legend-item"><span class="kg-legend-dot" style="background:#ed8936"></span> 2000+</div>
-      <div class="kg-legend-item" style="margin-left:12px;gap:2px;">◇ has data</div>
-      <div class="kg-legend-item" style="gap:2px;">○ referenced only</div>
+      <div class="kg-legend-item"><span class="kg-legend-dot" style="background:#4c51bf"></span> <span data-i18n="kg.pre1900">pre-1900</span></div>
+      <div class="kg-legend-item"><span class="kg-legend-dot" style="background:#4299e1"></span> <span data-i18n="kg.1900-1949">1900–1949</span></div>
+      <div class="kg-legend-item"><span class="kg-legend-dot" style="background:#48bb78"></span> <span data-i18n="kg.1950-1979">1950–1979</span></div>
+      <div class="kg-legend-item"><span class="kg-legend-dot" style="background:#ecc94b"></span> <span data-i18n="kg.1980-1999">1980–1999</span></div>
+      <div class="kg-legend-item"><span class="kg-legend-dot" style="background:#ed8936"></span> <span data-i18n="kg.2000plus">2000+</span></div>
+      <div class="kg-legend-item" style="margin-left:12px;gap:2px;" data-i18n="kg.hasdata">◇ has data</div>
+      <div class="kg-legend-item" style="gap:2px;" data-i18n="kg.refonly">○ referenced only</div>
     </div>
     <div id="kg-viz"></div>
   </div>
 </section>
 
 <section class="section" id="evolution">
-  <h2 class="section-title">Boundary Age Evolution</h2>
-  <p class="section-subtitle">How Cretaceous stage boundary ages have changed across ICS versions (2008–2021)</p>
+  <h2 class="section-title" data-i18n="section.evolution">Boundary Age Evolution</h2>
+  <p class="section-subtitle" data-i18n="section.evolution.sub">How Cretaceous stage boundary ages have changed across ICS versions (2008–2021)</p>
   <div class="card">
     <div id="cretaceous-chart"></div>
   </div>
 </section>
 
 <section class="section" id="cases">
-  <h2 class="section-title">Case Study: Table Data Version Identification</h2>
-  <p class="section-subtitle">Using the GTSKG knowledge graph and machine learning to automatically identify geological time scale versions in legacy tabular data</p>
+  <h2 class="section-title" data-i18n="section.case">Case Study: Table Data Version Identification</h2>
+  <p class="section-subtitle" data-i18n="section.case.sub">Using the GTSKG knowledge graph and machine learning to automatically identify geologic time scale versions in legacy tabular data</p>
 
   <!-- Overview grid -->
   <div class="case-stats-grid">
     <div class="case-stat-card">
       <div class="case-stat-num">2,479</div>
-      <div class="case-stat-label">Training Records</div>
+      <div class="case-stat-label" data-i18n="case.train">Training Records</div>
     </div>
     <div class="case-stat-card">
       <div class="case-stat-num">17</div>
-      <div class="case-stat-label">Target Versions</div>
+      <div class="case-stat-label" data-i18n="case.targets">Target Versions</div>
     </div>
     <div class="case-stat-card">
       <div class="case-stat-num">130</div>
-      <div class="case-stat-label">Countries</div>
+      <div class="case-stat-label" data-i18n="case.countries">Countries</div>
     </div>
     <div class="case-stat-card">
       <div class="case-stat-num">11</div>
-      <div class="case-stat-label">Continents</div>
+      <div class="case-stat-label" data-i18n="case.continents">Continents</div>
     </div>
     <div class="case-stat-card">
       <div class="case-stat-num">7</div>
-      <div class="case-stat-label">Periods</div>
+      <div class="case-stat-label" data-i18n="case.periods">Periods</div>
     </div>
     <div class="case-stat-card">
       <div class="case-stat-num">33</div>
-      <div class="case-stat-label">Stages</div>
+      <div class="case-stat-label" data-i18n="case.stages">Stages</div>
     </div>
   </div>
 
   <!-- Problem & Approach -->
   <div class="card" style="margin-bottom:24px;">
-    <h3 style="margin:0 0 12px;font-size:17px;color:var(--text-bright);">Background</h3>
+    <h3 style="margin:0 0 12px;font-size:17px;color:var(--text-bright);" data-i18n="case.background">Background</h3>
     <p style="color:var(--text-dim);line-height:1.7;margin:0 0 12px;">
       Geological literature often contains tables of fossil or lithology observations with <strong style="color:var(--text-bright)">stratigraphic period/stage names</strong> but rarely specifies which <strong style="color:var(--text-bright)">time scale version</strong> was used. The GTSKG knowledge graph encodes boundary ages for over 100 versions (1879–2024), which can be used as a <strong style="color:var(--accent)">lookup oracle</strong> to match period/stage names to version-specific numeric ages. Combined with spatial (lat/lon) and lithological features, a machine learning model can be trained to <strong style="color:var(--accent)">automatically classify legacy records</strong> into the correct time scale version.
     </p>
@@ -656,62 +665,62 @@ footer a { color: var(--accent); text-decoration: none; }
   <!-- Data distributions: two-column -->
   <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:24px;">
     <div class="card" style="flex:1;min-width:380px;">
-      <h3 style="margin:0 0 12px;font-size:15px;color:var(--text-bright);">Version Distribution</h3>
+      <h3 style="margin:0 0 12px;font-size:15px;color:var(--text-bright);" data-i18n="case.versionDist">Version Distribution</h3>
       <div id="case-chart-version"></div>
     </div>
     <div class="card" style="flex:1;min-width:380px;">
-      <h3 style="margin:0 0 12px;font-size:15px;color:var(--text-bright);">Period Distribution</h3>
+      <h3 style="margin:0 0 12px;font-size:15px;color:var(--text-bright);" data-i18n="case.periodDist">Period Distribution</h3>
       <div id="case-chart-period"></div>
     </div>
   </div>
 
   <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:24px;">
     <div class="card" style="flex:1;min-width:380px;">
-      <h3 style="margin:0 0 12px;font-size:15px;color:var(--text-bright);">Continent Distribution</h3>
+      <h3 style="margin:0 0 12px;font-size:15px;color:var(--text-bright);" data-i18n="case.continentDist">Continent Distribution</h3>
       <div id="case-chart-continent"></div>
     </div>
     <div class="card" style="flex:1;min-width:380px;">
-      <h3 style="margin:0 0 12px;font-size:15px;color:var(--text-bright);">LMU (Lower/Middle/Upper)</h3>
+      <h3 style="margin:0 0 12px;font-size:15px;color:var(--text-bright);" data-i18n="case.lmu">LMU (Lower/Middle/Upper)</h3>
       <div id="case-chart-lmu"></div>
     </div>
   </div>
 
   <div class="card" style="margin-bottom:24px;">
-    <h3 style="margin:0 0 12px;font-size:15px;color:var(--text-bright);">Top 10 Lithology Types</h3>
-    <p style="color:var(--text-dim);font-size:12px;margin:-8px 0 12px;">Lithology is a key feature — glacial tillites, coal measures, and evaporites each have distinct temporal distributions</p>
+    <h3 style="margin:0 0 12px;font-size:15px;color:var(--text-bright);" data-i18n="case.lith">Top 10 Lithology Types</h3>
+    <p style="color:var(--text-dim);font-size:12px;margin:-8px 0 12px;" data-i18n="case.lith.sub">Lithology is a key feature — glacial tillites, coal measures, and evaporites each have distinct temporal distributions</p>
     <div id="case-chart-lith"></div>
   </div>
 
   <!-- Methodology -->
   <div class="card" style="margin-bottom:24px;">
-    <h3 style="margin:0 0 16px;font-size:17px;color:var(--text-bright);">Methodology</h3>
+    <h3 style="margin:0 0 16px;font-size:17px;color:var(--text-bright);" data-i18n="case.methodology">Methodology</h3>
     <div style="display:flex;gap:16px;flex-wrap:wrap;">
       <div class="method-step">
         <div class="method-step-num">1</div>
-        <div class="method-step-title">Raw Data Parsing</div>
-        <div class="method-step-desc">Parse Excel records with Period, Stage, LMU, Lithology, Lat/Lon, Country, Continent, and Publication Year</div>
+        <div class="method-step-title" data-i18n="case.step1.title">Raw Data Parsing</div>
+        <div class="method-step-desc" data-i18n="case.step1.desc">Parse Excel records with Period, Stage, LMU, Lithology, Lat/Lon, Country, Continent, and Publication Year</div>
       </div>
       <div class="method-step">
         <div class="method-step-num">2</div>
-        <div class="method-step-title">KG Boundary Lookup</div>
-        <div class="method-step-desc">Query GTSKG TTL files by version + period/stage name to retrieve numeric age boundaries and uncertainties</div>
+        <div class="method-step-title" data-i18n="case.step2.title">KG Boundary Lookup</div>
+        <div class="method-step-desc" data-i18n="case.step2.desc">Query GTSKG TTL files by version + period/stage name to retrieve numeric age boundaries and uncertainties</div>
       </div>
       <div class="method-step">
         <div class="method-step-num">3</div>
-        <div class="method-step-title">Feature Encoding</div>
-        <div class="method-step-desc">Label-encode categorical features (Country, Continent, LMU, Period, Stage, Lithology); KNN-impute missing values</div>
+        <div class="method-step-title" data-i18n="case.step3.title">Feature Encoding</div>
+        <div class="method-step-desc" data-i18n="case.step3.desc">Label-encode categorical features (Country, Continent, LMU, Period, Stage, Lithology); KNN-impute missing values</div>
       </div>
       <div class="method-step">
         <div class="method-step-num">4</div>
-        <div class="method-step-title">ML Classification</div>
-        <div class="method-step-desc">Train K-Nearest Neighbors (k=1) on encoded features; predict the time scale version for test records</div>
+        <div class="method-step-title" data-i18n="case.step4.title">ML Classification</div>
+        <div class="method-step-desc" data-i18n="case.step4.desc">Train K-Nearest Neighbors (k=1) on encoded features; predict the time scale version for test records</div>
       </div>
     </div>
   </div>
 
   <!-- Code excerpts -->
   <div class="card">
-    <h3 style="margin:0 0 12px;font-size:17px;color:var(--text-bright);">Key Code</h3>
+    <h3 style="margin:0 0 12px;font-size:17px;color:var(--text-bright);" data-i18n="case.keycode">Key Code</h3>
     <pre class="case-code"># Query KG for boundary ages of a period/stage in a specific version
 def get_boundary_value(version_value, label):
     graph = Graph()
@@ -729,26 +738,26 @@ pred = clf.predict(test_feat)   # → version assignments for 2,479 test records
 </section>
 
 <section class="section" id="explorer">
-  <h2 class="section-title">Data Explorer</h2>
-  <p class="section-subtitle" id="explorer-subtitle">Browse and search geological time scale data by version</p>
+  <h2 class="section-title" data-i18n="section.explorer">Data Explorer</h2>
+  <p class="section-subtitle" id="explorer-subtitle" data-i18n="section.explorer.sub">Browse and search geologic time scale data by version</p>
   <div class="card">
     <div class="search-bar">
       <select id="explorer-version" onchange="onExplorerVersionChange()"></select>
-      <input type="text" id="table-search" placeholder="Search by name, parent, or level..." oninput="filterTable()">
+      <input type="text" id="table-search" data-i18n-placeholder="explorer.search" placeholder="Search by name, parent, or level..." oninput="filterTable()">
       <select id="level-filter" onchange="filterTable()">
-        <option value="">All Levels</option>
+        <option value="" data-i18n="explorer.allLevels">All Levels</option>
       </select>
       <span class="result-count" id="result-count"></span>
     </div>
     <div class="data-table-wrap">
       <table>
         <thead><tr>
-          <th onclick="sortTable('n')" id="th-name">Name</th>
-          <th onclick="sortTable('l')" id="th-level">Level</th>
-          <th onclick="sortTable('s')" id="th-start">Start (Ma)</th>
-          <th onclick="sortTable('e')" id="th-end">End (Ma)</th>
-          <th onclick="sortTable('p')" id="th-parent">Parent</th>
-          <th onclick="sortTable('g')" id="th-gssp">GSSP</th>
+          <th onclick="sortTable('n')" id="th-name" data-i18n="explorer.name">Name</th>
+          <th onclick="sortTable('l')" id="th-level" data-i18n="explorer.level">Level</th>
+          <th onclick="sortTable('s')" id="th-start" data-i18n="explorer.start">Start (Ma)</th>
+          <th onclick="sortTable('e')" id="th-end" data-i18n="explorer.end">End (Ma)</th>
+          <th onclick="sortTable('p')" id="th-parent" data-i18n="explorer.parent">Parent</th>
+          <th onclick="sortTable('g')" id="th-gssp" data-i18n="explorer.gssp">GSSP</th>
         </tr></thead>
         <tbody id="table-body"></tbody>
       </table>
@@ -759,11 +768,11 @@ pred = clf.predict(test_feat)   # → version assignments for 2,479 test records
 </section>
 
 <section class="section" id="languages">
-  <h2 class="section-title">🌐 Multilingual Geological Time Scale</h2>
-  <p class="section-subtitle">ICS 2024/12 International Chronostratigraphic Chart in 6 languages — compare and explore terminology across Chinese, Japanese, Korean, French, Spanish and English</p>
+  <h2 class="section-title" data-i18n="section.lang">🌐 Multilingual Geologic Time Scale</h2>
+  <p class="section-subtitle" data-i18n="section.lang.sub">ICS 2024/12 International Chronostratigraphic Chart in 6 languages — compare and explore terminology across Chinese, Japanese, Korean, French, Spanish and English</p>
   <div class="card">
     <div class="lang-selector">
-      <label>Select Language:</label>
+      <label data-i18n="lang.select">Select Language:</label>
       <select id="lang-select" onchange="onLangChange()">
         <option value="en"><span class="lang-flag">🇬🇧</span> English</option>
         <option value="zh">🇨🇳 中文 (Chinese)</option>
@@ -772,7 +781,7 @@ pred = clf.predict(test_feat)   # → version assignments for 2,479 test records
         <option value="fr">🇫🇷 Français (French)</option>
         <option value="es">🇪🇸 Español (Spanish)</option>
       </select>
-      <button class="lang-compare-btn" id="lang-compare-btn" onclick="toggleLangCompare()">📊 Compare Two Languages</button>
+      <button class="lang-compare-btn" id="lang-compare-btn" onclick="toggleLangCompare()" data-i18n="lang.compare">📊 Compare Two Languages</button>
       <select id="lang-compare-select" style="display:none;background:var(--bg-elevated);color:var(--text-bright);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:14px;font-family:var(--font);min-width:180px;" onchange="onLangChange()">
         <option value="zh">🇨🇳 中文 (Chinese)</option>
         <option value="ja">🇯🇵 日本語 (Japanese)</option>
@@ -782,17 +791,17 @@ pred = clf.predict(test_feat)   # → version assignments for 2,479 test records
       </select>
     </div>
     <div class="lang-stats" id="lang-stats">
-      <div class="lang-stat"><strong id="lang-ages-count">0</strong> Ages</div>
-      <div class="lang-stat"><strong id="lang-epochs-count">0</strong> Epochs</div>
-      <div class="lang-stat"><strong id="lang-periods-count">0</strong> Periods</div>
-      <div class="lang-stat"><strong id="lang-eras-count">0</strong> Eras</div>
-      <div class="lang-stat"><strong id="lang-eons-count">0</strong> Eons</div>
-      <div class="lang-stat" id="lang-total-stat"><strong id="lang-total-count">0</strong> Total Units</div>
+      <div class="lang-stat"><strong id="lang-ages-count">0</strong> <span data-i18n="lang.ages">Ages</span></div>
+      <div class="lang-stat"><strong id="lang-epochs-count">0</strong> <span data-i18n="lang.epochs">Epochs</span></div>
+      <div class="lang-stat"><strong id="lang-periods-count">0</strong> <span data-i18n="lang.periods">Periods</span></div>
+      <div class="lang-stat"><strong id="lang-eras-count">0</strong> <span data-i18n="lang.eras">Eras</span></div>
+      <div class="lang-stat"><strong id="lang-eons-count">0</strong> <span data-i18n="lang.eons">Eons</span></div>
+      <div class="lang-stat" id="lang-total-stat"><strong id="lang-total-count">0</strong> <span data-i18n="lang.total">Total Units</span></div>
     </div>
     <div class="lang-view-tabs">
-      <button class="lang-view-tab active" id="tab-sunburst" onclick="switchLangView('sunburst')">☀️ Sunburst Chart</button>
-      <button class="lang-view-tab" id="tab-table" onclick="switchLangView('table')">📋 Hierarchical Table</button>
-      <button class="lang-view-tab" id="tab-compare" onclick="switchLangView('compare')" style="display:none;">📊 Comparison View</button>
+      <button class="lang-view-tab active" id="tab-sunburst" onclick="switchLangView('sunburst')" data-i18n="lang.tab.sunburst">☀️ Sunburst Chart</button>
+      <button class="lang-view-tab" id="tab-table" onclick="switchLangView('table')" data-i18n="lang.tab.table">📋 Hierarchical Table</button>
+      <button class="lang-view-tab" id="tab-compare" onclick="switchLangView('compare')" style="display:none;" data-i18n="lang.tab.compare">📊 Comparison View</button>
     </div>
     <div id="lang-sunburst-container" class="lang-viz-wrap" style="position:relative;">
       <div class="lang-sunburst-legend">
@@ -808,12 +817,12 @@ pred = clf.predict(test_feat)   # → version assignments for 2,479 test records
       <table>
         <thead><tr>
           <th style="width:40px;">#</th>
-          <th>Local Name</th>
-          <th>English Name</th>
-          <th>Level</th>
-          <th>Start (Ma)</th>
-          <th>End (Ma)</th>
-          <th>Duration (Ma)</th>
+          <th data-i18n="lang.th.local">Local Name</th>
+          <th data-i18n="lang.th.english">English Name</th>
+          <th data-i18n="lang.th.level">Level</th>
+          <th data-i18n="lang.th.start">Start (Ma)</th>
+          <th data-i18n="lang.th.end">End (Ma)</th>
+          <th data-i18n="lang.th.duration">Duration (Ma)</th>
         </tr></thead>
         <tbody id="lang-table-body"></tbody>
       </table>
@@ -879,8 +888,8 @@ pred = clf.predict(test_feat)   # → version assignments for 2,479 test records
 
 
 <footer id="about">
-  <p><strong>GTSKG</strong> — Geological Time Scale Knowledge Graph &nbsp;·&nbsp; Data source: ESR_GTSData &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a></p>
-  <p style="margin-top:4px;">Visualization method adapted from <a href="https://pyrolite.readthedocs.io/">pyrolite</a> timescale rendering</p>
+  <p data-i18n="footer.line1"><strong>GTSKG</strong> — Geologic Time Scale Knowledge Graph &nbsp;·&nbsp; Data source: ESR_GTSData &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a></p>
+  <p style="margin-top:4px;" data-i18n="footer.line2">Visualization method adapted from <a href="https://pyrolite.readthedocs.io/">pyrolite</a> timescale rendering</p>
 </footer>
 
 <script>
@@ -2234,6 +2243,296 @@ var CHINESE_VERSION_DATA = {"data": [{"english": "Calabrian", "v2003": "卡拉�
   renderChineseVersionCompare();
 })();
 
+</script>
+
+<script>
+// ====== I18N: English-Chinese title toggle ======
+var I18N_DICT = {
+  en: {
+    // Nav
+    "nav.timescale": "Time Scale",
+    "nav.validation": "Validation",
+    "nav.cases": "Cases",
+    "nav.graph": "Graph",
+    "nav.evolution": "Evolution",
+    "nav.explorer": "Explorer",
+    "nav.languages": "🌐 Languages",
+    "nav.describe": "📖 Describe",
+    "nav.references": "📚 References",
+    // Hero
+    "hero.title": "Geologic Time Scale<br><span>Knowledge Graph</span>",
+    "hero.desc": "Interactive visualization of the geologic time scale across 102 versions from 1879 to 2024. Post-2000 versions use pyrolite multi-column rendering; pre-2000 versions use classic stacked-column charts. Automatic data validation and correction included.",
+    // Badges
+    "badge.dual": "Dual-Mode View",
+    "badge.pyrolite": "Pyrolite + Classic",
+    "badge.kg": "Knowledge Graph",
+    "badge.explorer": "Multi-Version Explorer",
+    "badge.ml": "ML Case Study",
+    "badge.multi": "🌐 Multilingual",
+    // Stats
+    "stat.versions": "Versions",
+    "stat.records": "Total Records",
+    "stat.swaps": "Swaps Fixed",
+    "stat.years": "Years Tracked",
+    // Section titles
+    "section.timescale": "Geologic Time Scale",
+    "section.timescale.sub": "Select a version — post-2000 uses pyrolite multi-column view, pre-2000 uses classic stacked column",
+    "section.validation": "Data Validation",
+    "section.validation.sub": "Automatic detection and correction of data anomalies",
+    "section.kg": "Version Knowledge Graph",
+    "section.kg.sub": "102 versions connected by 142 citation relationships — click a node to view its time scale",
+    "section.evolution": "Boundary Age Evolution",
+    "section.evolution.sub": "How Cretaceous stage boundary ages have changed across ICS versions (2008–2021)",
+    "section.case": "Case Study: Table Data Version Identification",
+    "section.case.sub": "Using the GTSKG knowledge graph and machine learning to automatically identify geologic time scale versions in legacy tabular data",
+    "section.explorer": "Data Explorer",
+    "section.explorer.sub": "Browse and search geologic time scale data by version",
+    "section.lang": "🌐 Multilingual Geologic Time Scale",
+    "section.lang.sub": "ICS 2024/12 International Chronostratigraphic Chart in 6 languages — compare and explore terminology across Chinese, Japanese, Korean, French, Spanish and English",
+    // Validation
+    "validation.swaps": "Start/End swaps corrected",
+    "validation.issues": "Issues detected",
+    "validation.detail": "Swaps Detail (start &lt; end → automatically swapped)",
+    // Version selector
+    "version.label": "Version:",
+    // Knowledge Graph
+    "kg.search": "Search version...",
+    "kg.zoom.in": "Zoom in",
+    "kg.zoom.out": "Zoom out",
+    "kg.zoom.reset": "Reset view",
+    "kg.nodes": "nodes",
+    "kg.edges": "edges",
+    "kg.pre1900": "pre-1900",
+    "kg.1900-1949": "1900–1949",
+    "kg.1950-1979": "1950–1979",
+    "kg.1980-1999": "1980–1999",
+    "kg.2000plus": "2000+",
+    "kg.hasdata": "◇ has data",
+    "kg.refonly": "○ referenced only",
+    // Case study
+    "case.train": "Training Records",
+    "case.targets": "Target Versions",
+    "case.countries": "Countries",
+    "case.continents": "Continents",
+    "case.periods": "Periods",
+    "case.stages": "Stages",
+    "case.background": "Background",
+    "case.versionDist": "Version Distribution",
+    "case.periodDist": "Period Distribution",
+    "case.continentDist": "Continent Distribution",
+    "case.lmu": "LMU (Lower/Middle/Upper)",
+    "case.lith": "Top 10 Lithology Types",
+    "case.lith.sub": "Lithology is a key feature — glacial tillites, coal measures, and evaporites each have distinct temporal distributions",
+    "case.methodology": "Methodology",
+    "case.step1.title": "Raw Data Parsing",
+    "case.step1.desc": "Parse Excel records with Period, Stage, LMU, Lithology, Lat/Lon, Country, Continent, and Publication Year",
+    "case.step2.title": "KG Boundary Lookup",
+    "case.step2.desc": "Query GTSKG TTL files by version + period/stage name to retrieve numeric age boundaries and uncertainties",
+    "case.step3.title": "Feature Encoding",
+    "case.step3.desc": "Label-encode categorical features (Country, Continent, LMU, Period, Stage, Lithology); KNN-impute missing values",
+    "case.step4.title": "ML Classification",
+    "case.step4.desc": "Train K-Nearest Neighbors (k=1) on encoded features; predict the time scale version for test records",
+    "case.keycode": "Key Code",
+    // Data explorer
+    "explorer.search": "Search by name, parent, or level...",
+    "explorer.allLevels": "All Levels",
+    "explorer.name": "Name",
+    "explorer.level": "Level",
+    "explorer.start": "Start (Ma)",
+    "explorer.end": "End (Ma)",
+    "explorer.parent": "Parent",
+    "explorer.gssp": "GSSP",
+    // Multilingual section
+    "lang.select": "Select Language:",
+    "lang.compare": "📊 Compare Two Languages",
+    "lang.ages": "Ages",
+    "lang.epochs": "Epochs",
+    "lang.periods": "Periods",
+    "lang.eras": "Eras",
+    "lang.eons": "Eons",
+    "lang.total": "Total Units",
+    "lang.tab.sunburst": "☀️ Sunburst Chart",
+    "lang.tab.table": "📋 Hierarchical Table",
+    "lang.tab.compare": "📊 Comparison View",
+    "lang.th.local": "Local Name",
+    "lang.th.english": "English Name",
+    "lang.th.level": "Level",
+    "lang.th.start": "Start (Ma)",
+    "lang.th.end": "End (Ma)",
+    "lang.th.duration": "Duration (Ma)",
+    // Footer
+    "footer.line1": '<strong>GTSKG</strong> — Geologic Time Scale Knowledge Graph &nbsp;·&nbsp; Data source: ESR_GTSData &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a>',
+    "footer.line2": 'Visualization method adapted from <a href="https://pyrolite.readthedocs.io/">pyrolite</a> timescale rendering'
+  },
+  zh: {
+    // Nav
+    "nav.timescale": "时间表",
+    "nav.validation": "数据验证",
+    "nav.cases": "案例研究",
+    "nav.graph": "知识图谱",
+    "nav.evolution": "年代演化",
+    "nav.explorer": "数据浏览器",
+    "nav.languages": "🌐 多语言",
+    "nav.describe": "📖 描述",
+    "nav.references": "📚 参考文献",
+    // Hero
+    "hero.title": "地质年代表<br><span>知识图谱</span>",
+    "hero.desc": "102个地质年代表版本（1879–2024）的交互式可视化。2000年后版本采用pyrolite多列渲染，2000年前版本采用经典单列堆叠柱状图。包含自动数据验证与修正功能。",
+    // Badges
+    "badge.dual": "双模式视图",
+    "badge.pyrolite": "Pyrolite + 经典",
+    "badge.kg": "知识图谱",
+    "badge.explorer": "多版本浏览",
+    "badge.ml": "机器学习案例",
+    "badge.multi": "🌐 多语言",
+    // Stats
+    "stat.versions": "版本数",
+    "stat.records": "总记录数",
+    "stat.swaps": "修复的首尾互换",
+    "stat.years": "跨年",
+    // Section titles
+    "section.timescale": "地质年代表",
+    "section.timescale.sub": "选择版本 — 2000年后使用pyrolite多列视图，2000年前使用经典单列堆叠",
+    "section.validation": "数据验证",
+    "section.validation.sub": "自动检测与修正数据异常",
+    "section.kg": "版本知识图谱",
+    "section.kg.sub": "102个版本通过142条引用关系关联 — 点击节点查看对应年代表",
+    "section.evolution": "界线年龄演化",
+    "section.evolution.sub": "白垩纪各阶界线年龄在ICS各版本中的变化（2008–2021）",
+    "section.case": "案例研究：表格数据版本识别",
+    "section.case.sub": "利用GTSKG知识图谱和机器学习自动识别遗留表格数据中的地质年代表版本",
+    "section.explorer": "数据浏览器",
+    "section.explorer.sub": "按版本浏览和搜索地质年代表数据",
+    "section.lang": "🌐 多语言地质年代表",
+    "section.lang.sub": "ICS 2024/12国际年代地层表6种语言版本 — 比较和探索中文、日文、韩文、法文、西班牙文和英文术语",
+    // Validation
+    "validation.swaps": "首尾值互换已修正",
+    "validation.issues": "检测到的问题",
+    "validation.detail": "互换详情（起始值 &lt; 结束值 → 自动交换）",
+    // Version selector
+    "version.label": "版本：",
+    // Knowledge Graph
+    "kg.search": "搜索版本...",
+    "kg.zoom.in": "放大",
+    "kg.zoom.out": "缩小",
+    "kg.zoom.reset": "重置视图",
+    "kg.nodes": "节点",
+    "kg.edges": "边",
+    "kg.pre1900": "1900年前",
+    "kg.1900-1949": "1900–1949",
+    "kg.1950-1979": "1950–1979",
+    "kg.1980-1999": "1980–1999",
+    "kg.2000plus": "2000年后",
+    "kg.hasdata": "◇ 有数据",
+    "kg.refonly": "○ 仅被引用",
+    // Case study
+    "case.train": "训练记录",
+    "case.targets": "目标版本",
+    "case.countries": "国家",
+    "case.continents": "大洲",
+    "case.periods": "纪",
+    "case.stages": "阶",
+    "case.background": "背景",
+    "case.versionDist": "版本分布",
+    "case.periodDist": "纪分布",
+    "case.continentDist": "大洲分布",
+    "case.lmu": "LMU（早/中/晚统）",
+    "case.lith": "前10种岩石类型",
+    "case.lith.sub": "岩性是关键特征 — 冰碛岩、煤系和蒸发岩各自具有独特的时间分布",
+    "case.methodology": "方法",
+    "case.step1.title": "原始数据解析",
+    "case.step1.desc": "解析Excel记录，包括纪、阶、LMU、岩性、经纬度、国家、大洲和出版年份",
+    "case.step2.title": "知识图谱界线查询",
+    "case.step2.desc": "按版本+纪/阶名称查询GTSKG TTL文件，获取数值年龄界线和不确定性",
+    "case.step3.title": "特征编码",
+    "case.step3.desc": "对分类特征（国家、大洲、LMU、纪、阶、岩性）进行标签编码；KNN填补缺失值",
+    "case.step4.title": "机器学习分类",
+    "case.step4.desc": "基于编码特征训练K近邻分类器（k=1）；预测测试记录的年代版本",
+    "case.keycode": "核心代码",
+    // Data explorer
+    "explorer.search": "按名称、父级或级别搜索...",
+    "explorer.allLevels": "全部级别",
+    "explorer.name": "名称",
+    "explorer.level": "级别",
+    "explorer.start": "起始 (Ma)",
+    "explorer.end": "结束 (Ma)",
+    "explorer.parent": "父级",
+    "explorer.gssp": "GSSP",
+    // Multilingual section
+    "lang.select": "选择语言：",
+    "lang.compare": "📊 双语比较",
+    "lang.ages": "期",
+    "lang.epochs": "世",
+    "lang.periods": "纪",
+    "lang.eras": "代",
+    "lang.eons": "宙",
+    "lang.total": "总单元数",
+    "lang.tab.sunburst": "☀️ 旭日图",
+    "lang.tab.table": "📋 层级表",
+    "lang.tab.compare": "📊 对比视图",
+    "lang.th.local": "本地名称",
+    "lang.th.english": "英文名称",
+    "lang.th.level": "级别",
+    "lang.th.start": "起始 (Ma)",
+    "lang.th.end": "结束 (Ma)",
+    "lang.th.duration": "时长 (Ma)",
+    // Footer
+    "footer.line1": '<strong>GTSKG</strong> — 地质年代知识图谱 &nbsp;·&nbsp; 数据来源: ESR_GTSData &nbsp;·&nbsp; 基于 <a href="https://d3js.org">D3.js</a> 构建',
+    "footer.line2": '可视化方法改编自 <a href="https://pyrolite.readthedocs.io/">pyrolite</a> 年代表渲染'
+  }
+};
+
+window.currentLang = 'en';
+window.toggleLang = function() {
+  var btn = document.getElementById('lang-btn');
+  if (window.currentLang === 'en') {
+    window.currentLang = 'zh';
+    btn.textContent = 'EN';
+    btn.title = 'Switch to English';
+    applyLang('zh');
+    localStorage.setItem('gtskg_lang', 'zh');
+  } else {
+    window.currentLang = 'en';
+    btn.textContent = '中';
+    btn.title = '切换中文';
+    applyLang('en');
+    localStorage.setItem('gtskg_lang', 'en');
+  }
+};
+
+function applyLang(lang) {
+  var dict = I18N_DICT[lang];
+  // Apply to elements with data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (dict[key]) {
+      el.innerHTML = dict[key];
+    }
+  });
+  // Apply to placeholder attributes
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key]) {
+      el.placeholder = dict[key];
+    }
+  });
+  // Apply to title attributes
+  document.querySelectorAll('[data-i18n-title]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-title');
+    if (dict[key]) {
+      el.title = dict[key];
+    }
+  });
+}
+
+// Restore saved language preference
+(function() {
+  var saved = localStorage.getItem('gtskg_lang');
+  if (saved === 'zh') {
+    window.currentLang = 'en'; // force toggle
+    toggleLang();
+  }
+})();
 </script>
 
 </body>

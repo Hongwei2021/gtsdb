@@ -41,6 +41,14 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
   border-radius: 6px; font-size: 13px; transition: all 0.2s;
 }
 .header nav a:hover, .header nav a.active { color: var(--text-bright); background: var(--bg-elevated); }
+.lang-btn {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text-dim); padding: 5px 10px; border-radius: 6px;
+  cursor: pointer; font-size: 12px; font-weight: 600;
+  font-family: var(--font); transition: all 0.2s; margin-left: 8px;
+}
+.lang-btn:hover { color: var(--text-bright); border-color: var(--accent); }
+[data-i18n] { transition: opacity 0.2s; }
 
 /* Section headers */
 .section {
@@ -157,20 +165,21 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
 <body>
 
 <header class="header">
-  <h1>🌍 <span>GTS</span> Describe</h1>
+  <h1 data-i18n="header.title">🌍 <span>GTS</span> Describe</h1>
   <nav>
-    <a href="index.html">🌍 GTSKG</a>
-    <a href="references.html">📚 References</a>
-    <a href="#etymology" class="active">📖 Etymology</a>
-    <a href="#timeline">⏳ Earth Timeline</a>
+    <a href="index.html" data-i18n="nav.home">🌍 GTSKG</a>
+    <a href="references.html" data-i18n="nav.refs">📚 References</a>
+    <a href="#etymology" class="active" data-i18n="nav.etymology">📖 Etymology</a>
+    <a href="#timeline" data-i18n="nav.timeline">⏳ Earth Timeline</a>
   </nav>
+  <button class="lang-btn" id="lang-btn" onclick="toggleLang()" title="切换中文">中</button>
 </header>
 
 <!-- ==================== SECTION 1: Etymology ==================== -->
 <section id="etymology" class="section">
   <div class="section-header">
-    <h2>📖 Etymology Explorer · 地质年代词源</h2>
-    <p>ICS 国际年代地层命名溯源 — 每个地质年代名称背后都有一段来自希腊语、拉丁语或地域名称的故事</p>
+    <h2 data-i18n="etymology.title">📖 Etymology Explorer · 地质年代词源</h2>
+    <p data-i18n="etymology.sub">ICS 国际年代地层命名溯源 — 每个地质年代名称背后都有一段来自希腊语、拉丁语或地域名称的故事</p>
   </div>
   <div class="etymology-stats" id="etymology-stats"></div>
   <div class="etymology-filters" id="etymology-filters"></div>
@@ -180,15 +189,15 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
 <!-- ==================== SECTION 2: Earth History Timeline ==================== -->
 <section id="timeline" class="section scroll-timeline">
   <div class="section-header">
-    <h2>⏳ Earth History Timeline · 地球历史时间线</h2>
-    <p>从地球诞生 (4540 Ma) 到全新世 (8 ka) 的 135 个关键事件 — 点击节点查看详情，拖动或滚轮缩放</p>
+    <h2 data-i18n="timeline.title">⏳ Earth History Timeline · 地球历史时间线</h2>
+    <p data-i18n="timeline.sub">从地球诞生 (4540 Ma) 到全新世 (8 ka) 的 135 个关键事件 — 点击节点查看详情，拖动或滚轮缩放</p>
   </div>
   <div class="timeline-controls">
-    <input type="text" class="timeline-search" id="timeline-search" placeholder="🔍 搜索事件... (e.g. 'extinction', 'Moon', 'dinosaur')" oninput="filterTimeline()">
+    <input type="text" class="timeline-search" id="timeline-search" data-i18n-placeholder="timeline.search" placeholder="🔍 搜索事件... (e.g. 'extinction', 'Moon', 'dinosaur')" oninput="filterTimeline()">
     <div class="timeline-zoom">
-      <button onclick="zoomTimeline(1.3)" title="Zoom In">🔍+</button>
-      <button onclick="zoomTimeline(0.7)" title="Zoom Out">🔍−</button>
-      <button onclick="resetTimelineZoom()" title="Reset">↺</button>
+      <button onclick="zoomTimeline(1.3)" data-i18n-title="timeline.zoom.in" title="Zoom In">🔍+</button>
+      <button onclick="zoomTimeline(0.7)" data-i18n-title="timeline.zoom.out" title="Zoom Out">🔍−</button>
+      <button onclick="resetTimelineZoom()" data-i18n-title="timeline.zoom.reset" title="Reset">↺</button>
     </div>
     <span class="timeline-info" id="timeline-info"></span>
   </div>
@@ -456,6 +465,84 @@ function getEraForMa(ma) {
       a.classList.toggle('active', a.getAttribute('href') === '#' + current);
     });
   });
+})();
+</script>
+
+<script>
+// ====== I18N: English-Chinese title toggle ======
+var I18N_DICT = {
+  en: {
+    "header.title": '🌍 <span>GTS</span> Describe',
+    "nav.home": "🌍 GTSKG",
+    "nav.refs": "📚 References",
+    "nav.etymology": "📖 Etymology",
+    "nav.timeline": "⏳ Earth Timeline",
+    "etymology.title": "📖 Etymology Explorer · 地质年代词源",
+    "etymology.sub": "ICS 国际年代地层命名溯源 — 每个地质年代名称背后都有一段来自希腊语、拉丁语或地域名称的故事",
+    "timeline.title": "⏳ Earth History Timeline · 地球历史时间线",
+    "timeline.sub": "从地球诞生 (4540 Ma) 到全新世 (8 ka) 的 135 个关键事件 — 点击节点查看详情，拖动或滚轮缩放",
+    "timeline.search": "🔍 搜索事件... (e.g. 'extinction', 'Moon', 'dinosaur')",
+    "timeline.zoom.in": "Zoom In",
+    "timeline.zoom.out": "Zoom Out",
+    "timeline.zoom.reset": "Reset"
+  },
+  zh: {
+    "header.title": '🌍 <span>GTS</span> 描述',
+    "nav.home": "🌍 GTSKG",
+    "nav.refs": "📚 参考文献",
+    "nav.etymology": "📖 词源",
+    "nav.timeline": "⏳ 地球时间线",
+    "etymology.title": "📖 地质年代词源 · Etymology Explorer",
+    "etymology.sub": "ICS 国际年代地层命名溯源 — 每个地质年代名称背后都有一段来自希腊语、拉丁语或地域名称的故事",
+    "timeline.title": "⏳ 地球历史时间线 · Earth History Timeline",
+    "timeline.sub": "从地球诞生 (4540 Ma) 到全新世 (8 ka) 的 135 个关键事件 — 点击节点查看详情，拖动或滚轮缩放",
+    "timeline.search": "🔍 搜索事件... (e.g. 'extinction', 'Moon', 'dinosaur')",
+    "timeline.zoom.in": "放大",
+    "timeline.zoom.out": "缩小",
+    "timeline.zoom.reset": "重置"
+  }
+};
+
+window.currentLang = 'en';
+window.toggleLang = function() {
+  var btn = document.getElementById('lang-btn');
+  if (window.currentLang === 'en') {
+    window.currentLang = 'zh';
+    btn.textContent = 'EN';
+    btn.title = 'Switch to English';
+    applyLang('zh');
+    localStorage.setItem('gtskg_lang', 'zh');
+  } else {
+    window.currentLang = 'en';
+    btn.textContent = '中';
+    btn.title = '切换中文';
+    applyLang('en');
+    localStorage.setItem('gtskg_lang', 'en');
+  }
+};
+
+function applyLang(lang) {
+  var dict = I18N_DICT[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key]) el.placeholder = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-title');
+    if (dict[key]) el.title = dict[key];
+  });
+}
+
+(function() {
+  var saved = localStorage.getItem('gtskg_lang');
+  if (saved === 'zh') {
+    window.currentLang = 'en';
+    toggleLang();
+  }
 })();
 </script>
 

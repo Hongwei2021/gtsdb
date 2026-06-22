@@ -41,6 +41,14 @@ nav .links a {
 }
 nav .links a:hover { color: var(--text-bright); }
 nav .links a.active { color: var(--accent); }
+.lang-btn {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text-dim); padding: 5px 10px; border-radius: 6px;
+  cursor: pointer; font-size: 12px; font-weight: 600;
+  font-family: var(--font); transition: all 0.2s; margin-left: 8px;
+}
+.lang-btn:hover { color: var(--text-bright); border-color: var(--accent); }
+[data-i18n] { transition: opacity 0.2s; }
 
 /* Section layout */
 .page { padding: 88px 24px 80px; max-width: 1100px; margin: 0 auto; }
@@ -135,10 +143,11 @@ nav .links a.active { color: var(--accent); }
 <nav>
   <a href="index.html" class="logo">🌍 <span>GTSKG</span></a>
   <ul class="links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="gts_describe.html">Describe</a></li>
-    <li><a href="references.html" class="active">References</a></li>
+    <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+    <li><a href="gts_describe.html" data-i18n="nav.describe">Describe</a></li>
+    <li><a href="references.html" class="active" data-i18n="nav.references">References</a></li>
   </ul>
+  <button class="lang-btn" id="lang-btn" onclick="toggleLang()" title="切换中文">中</button>
 </nav>
 
 <div class="page">
@@ -146,8 +155,8 @@ nav .links a.active { color: var(--accent); }
 <!-- ==================== Part 1: References ==================== -->
 <section class="section" id="refs">
   <div class="section-header">
-    <h2>📚 References · 参考文献</h2>
-    <p>网站数据支持所参考的文献资料，涵盖地质年代表研究发展历程中的关键著作</p>
+    <h2 data-i18n="refs.title">📚 References · 参考文献</h2>
+    <p data-i18n="refs.sub">网站数据支持所参考的文献资料，涵盖地质年代表研究发展历程中的关键著作</p>
   </div>
   <div class="ref-stats" id="ref-stats"></div>
   <div class="ref-table-wrap">
@@ -163,8 +172,8 @@ nav .links a.active { color: var(--accent); }
 <!-- ==================== Part 2: Publications & Achievements ==================== -->
 <section class="section" id="pubs">
   <div class="section-header">
-    <h2>📝 Publications &amp; Achievements · 发表文章及相关成果</h2>
-    <p>基于本网站数据发表的研究论文、报告及相关成果</p>
+    <h2 data-i18n="pubs.title">📝 Publications</h2>
+    <p data-i18n="pubs.sub">Research articles and outputs related to this database</p>
   </div>
   <!--
     ╔══════════════════════════════════════════════════════════════════════╗
@@ -190,13 +199,10 @@ nav .links a.active { color: var(--accent); }
     ╚══════════════════════════════════════════════════════════════════════╝
   -->
   <div id="pub-list">
-    <div class="pub-placeholder">
-      <div class="icon">📋</div>
-      <h3>Coming Soon · 待添加</h3>
-      <p>此部分将收录基于本网站数据发表的研究论文、学术报告及相关成果。添加条目请编辑下方 HTML 代码区。</p>
-      <div class="code-hint">
-        &lt;!-- LOCATION: gts_describe.html → id="pub-list" → replace this .pub-placeholder block --&gt;
-      </div>
+    <div class="pub-entry">
+      <span class="pub-year" style="background:#4493f8">2025</span>
+      <div class="pub-title">Why knowledge graphs are essential for harmonizing heterogeneous geologic time scales</div>
+      <div class="pub-meta">Wang H, Ma C, Ma X, Ogg JG, Wang C · <em>Episodes</em> 2025; 48: 565–577 · <a href="https://doi.org/10.18814/epiiugs/2025/025016" target="_blank" rel="noopener" style="color:var(--accent);">https://doi.org/10.18814/epiiugs/2025/025016</a></div>
     </div>
   </div>
 </section>
@@ -205,83 +211,142 @@ nav .links a.active { color: var(--accent); }
 
 <script>
 // ===== REFERENCE DATA =====
+// To add a new entry, append at the end of the array. Numbers auto-assign.
 var REFERENCES = [
-  {num:1, id:"Walcott1893", cite:"Walcott C D. Geologic time, as indicated by the sedimentary rocks of North America[J]. The Journal of Geology, 1893, 1(7): 639-676."},
-  {num:2, id:"Barrell1917", cite:"Barrell J. Rhythms and the measurements of geologic time[J]. Bulletin of the Geological Society of America, 1917, 28(1): 745-904."},
-  {num:3, id:"Holmes1933", cite:"Holmes A. The thermal history of the earth[J]. Journal of the Washington Academy of Sciences, 1933, 23(4): 169-195."},
-  {num:4, id:"Elias1945", cite:"Elias M K. Geological Calendar (Indications of Periodicity in Nature and Succession of Geological Periods)[J]. AAPG Bulletin, 1945, 29(7): 1035-1043."},
-  {num:16, id:"Holmes1947", cite:"Holmes A. VII.—The Construction of a Geological Time-Scale[J]. Transactions of the Geological Society of Glasgow, 1947, 21(1): 117-152."},
-  {num:17, id:"Holmes1959", cite:"Holmes A. A revised geological time-scale[J]. Transactions of the Edinburgh Geological Society, 1959, 17(3): 183-216."},
-  {num:18, id:"Holmes-Marble1960", cite:"Faul H. Geologic time scale[J]. Geological Society of America Bulletin, 1960, 71(5): 637-644."},
-  {num:19, id:"Kulp1961", cite:"Kulp J L. Geologic Time Scale: Isotopic age determinations on rocks of known stratigraphic age define an absolute time scale for earth history[J]. Science, 1961, 133(3459): 1105-1114."},
-  {num:20, id:"GSL1964old", cite:"Smith A G, Wilcock B, Francis E H, et al. The Phanerozoic time-scale[M]. Geological Society Publishing House, 1971."},
-  {num:21, id:"GSL1964new", cite:"Smith A G. Potassium—argon decay constants and age tables[J]. Geological Society, London, Special Publications, 1964, 1(1): 129-141."},
-  {num:22, id:"GSL1971", cite:"Lambert R S J. The pre-Pleistocene Phanerozoic time-scale—a review[J]. Geological Society, London, Special Publications, 1971, 5(1): 9-31."},
-  {num:23, id:"Vanhinte1976", cite:"Van Hinte J E. A Cretaceous time scale[J]. AAPG Bulletin, 1976, 60(4): 498-516."},
-  {num:24, id:"Odin1982", cite:"Odin G S. The Phanerozoic time scale revisited[J]. Episodes Journal of International Geoscience, 1982, 5(3): 3-9."},
-  {num:25, id:"DNAG83", cite:"Palmer A R. The decade of North American geology 1983 geologic time scale[J]. Geology, 1983, 11(9): 503-504."},
-  {num:26, id:"Carr1984", cite:"Carr P F, Jones B G, Quinn B G, et al. Toward an objective Phanerozoic time scale[J]. Geology, 1984, 12(5): 274-277."},
-  {num:27, id:"KG1985", cite:"Kent D V, Gradstein F M. A Cretaceous and Jurassic geochronology[J]. Geological Society of America Bulletin, 1985, 96(11): 1419-1427."},
-  {num:28, id:"Snelling1985", cite:"Snelling N J. An interim time-scale[J]. Geological Society, London, Memoirs, 1985, 10(1): 261-265."},
-  {num:29, id:"EX88", cite:"Haq B U, Hardenbol J A N, Vail P R. Chronology of fluctuating sea levels since the Triassic[J]. Science, 1987, 235(4793): 1156-1167."},
-  {num:29, id:"Květ1991", cite:"Květ R. Complete periodical geological time table[J]. GeoJournal, 1991, 24(4): 417-420."},
-  {num:30, id:"Berggren2001", cite:"Berggren W A. International Time Scale[J]. eLS, 2001."},
-  {num:31, id:"GSA1983", cite:"Palmer A R. The decade of North American geology 1983 geologic time scale[J]. Geology, 1983, 11(9): 503-504."},
-  {num:32, id:"GSA1999", cite:"—"},
-  {num:33, id:"GSA2009", cite:"—"},
-  {num:34, id:"GSA2012", cite:"—"},
-  {num:35, id:"GSA2018", cite:"—"},
-  {num:36, id:"ICS2004", cite:"International Chronostratigraphic Chart 2004. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:37, id:"ICS2005", cite:"International Chronostratigraphic Chart 2005. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:38, id:"ICS2006", cite:"International Chronostratigraphic Chart 2006. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:39, id:"ICS2007", cite:"International Chronostratigraphic Chart 2007. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:40, id:"ICS2008", cite:"International Chronostratigraphic Chart 2008. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:41, id:"ICS2009", cite:"International Chronostratigraphic Chart 2009. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:42, id:"ICS2010", cite:"International Chronostratigraphic Chart 2010. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:43, id:"ICS2012", cite:"International Chronostratigraphic Chart 2012. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:44, id:"ICS201301", cite:"International Chronostratigraphic Chart 2013/01. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:45, id:"ICS201402", cite:"International Chronostratigraphic Chart 2014/02. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:46, id:"ICS201410", cite:"International Chronostratigraphic Chart 2014/10. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:47, id:"ICS201501", cite:"International Chronostratigraphic Chart 2015/01. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:48, id:"ICS201604", cite:"International Chronostratigraphic Chart 2016/04. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:49, id:"ICS201610", cite:"International Chronostratigraphic Chart 2016/10. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:50, id:"ICS201702", cite:"International Chronostratigraphic Chart 2017/02. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:51, id:"ICS201807", cite:"International Chronostratigraphic Chart 2018/07. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:52, id:"ICS201808", cite:"International Chronostratigraphic Chart 2018/08. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:53, id:"ICS201905", cite:"International Chronostratigraphic Chart 2019/05. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:54, id:"ICS202001", cite:"International Chronostratigraphic Chart 2020/01. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:55, id:"ICS202003", cite:"International Chronostratigraphic Chart 2020/03. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:56, id:"ICS202105", cite:"International Chronostratigraphic Chart 2021/05. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:57, id:"ICS202107", cite:"International Chronostratigraphic Chart 2021/07. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:58, id:"ICS202202", cite:"International Chronostratigraphic Chart 2022/02. International Commission on Stratigraphy. https://stratigraphy.org"},
-  {num:59, id:"GTS2020", cite:"—"},
-  {num:60, id:"GTS2016", cite:"Ogg J G, Ogg G, Gradstein F M. A concise geologic time scale: 2016[M]. Elsevier, 2016."},
-  {num:61, id:"GTS2012", cite:"The geologic time scale 2012[M]. elsevier, 2012."},
-  {num:62, id:"GTS2008_1", cite:"Ogg J G, Ogg G, Gradstein F M. A concise geologic time scale: 2016[M]. Elsevier, 2016."},
-  {num:62, id:"GTS2008_2", cite:"—"},
-  {num:63, id:"GTS2004", cite:"Ogg J G, Gradstein F M, Smith A G. A geologic time scale 2004[M]. Cambridge University Press, 2004."},
-  {num:64, id:"GTS1989", cite:"Harland W B, Armstrong R L, Cox A V, et al. A geologic time scale 1989[M]. Cambridge University Press, 1990."},
-  {num:65, id:"GTS1982", cite:"—"},
-  {num:"—", id:"Lyell1833", cite:"—"}
+  {id:"Walcott1893", cite:"Walcott C D. Geologic time, as indicated by the sedimentary rocks of North America[J]. The Journal of Geology, 1893, 1(7): 639-676."},
+  {id:"Barrell1917", cite:"Barrell J. Rhythms and the measurements of geologic time[J]. Bulletin of the Geological Society of America, 1917, 28(1): 745-904."},
+  {id:"Holmes1933", cite:"Holmes A. The thermal history of the earth[J]. Journal of the Washington Academy of Sciences, 1933, 23(4): 169-195."},
+  {id:"Elias1945", cite:"Elias M K. Geological Calendar (Indications of Periodicity in Nature and Succession of Geological Periods)[J]. AAPG Bulletin, 1945, 29(7): 1035-1043."},
+  {id:"Holmes1947", cite:"Holmes A. VII.—The Construction of a Geological Time-Scale[J]. Transactions of the Geological Society of Glasgow, 1947, 21(1): 117-152."},
+  {id:"Holmes1959", cite:"Holmes A. A revised geological time-scale[J]. Transactions of the Edinburgh Geological Society, 1959, 17(3): 183-216."},
+  {id:"Holmes-Marble1960", cite:"Faul H. Geologic time scale[J]. Geological Society of America Bulletin, 1960, 71(5): 637-644."},
+  {id:"Kulp1961", cite:"Kulp J L. Geologic Time Scale: Isotopic age determinations on rocks of known stratigraphic age define an absolute time scale for earth history[J]. Science, 1961, 133(3459): 1105-1114."},
+  {id:"GSL1964old", cite:"Smith A G, Wilcock B, Francis E H, et al. The Phanerozoic time-scale[M]. Geological Society Publishing House, 1971."},
+  {id:"GSL1964new", cite:"Smith A G. Potassium—argon decay constants and age tables[J]. Geological Society, London, Special Publications, 1964, 1(1): 129-141."},
+  {id:"GSL1971", cite:"Lambert R S J. The pre-Pleistocene Phanerozoic time-scale—a review[J]. Geological Society, London, Special Publications, 1971, 5(1): 9-31."},
+  {id:"Vanhinte1976", cite:"Van Hinte J E. A Cretaceous time scale[J]. AAPG Bulletin, 1976, 60(4): 498-516."},
+  {id:"Odin1982", cite:"Odin G S. The Phanerozoic time scale revisited[J]. Episodes Journal of International Geoscience, 1982, 5(3): 3-9."},
+  {id:"DNAG83", cite:"Palmer A R. The decade of North American geology 1983 geologic time scale[J]. Geology, 1983, 11(9): 503-504."},
+  {id:"Carr1984", cite:"Carr P F, Jones B G, Quinn B G, et al. Toward an objective Phanerozoic time scale[J]. Geology, 1984, 12(5): 274-277."},
+  {id:"KG1985", cite:"Kent D V, Gradstein F M. A Cretaceous and Jurassic geochronology[J]. Geological Society of America Bulletin, 1985, 96(11): 1419-1427."},
+  {id:"Snelling1985", cite:"Snelling N J. An interim time-scale[J]. Geological Society, London, Memoirs, 1985, 10(1): 261-265."},
+  {id:"EX88", cite:"Haq B U, Hardenbol J A N, Vail P R. Chronology of fluctuating sea levels since the Triassic[J]. Science, 1987, 235(4793): 1156-1167."},
+  {id:"Květ1991", cite:"Květ R. Complete periodical geological time table[J]. GeoJournal, 1991, 24(4): 417-420."},
+  {id:"Berggren2001", cite:"Berggren W A. International Time Scale[J]. eLS, 2001."},
+  {id:"GSA1983", cite:"Palmer A R. The decade of North American geology 1983 geologic time scale[J]. Geology, 1983, 11(9): 503-504."},
+  {id:"ICS2004", cite:"International Chronostratigraphic Chart 2004. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS2005", cite:"International Chronostratigraphic Chart 2005. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS2006", cite:"International Chronostratigraphic Chart 2006. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS2007", cite:"International Chronostratigraphic Chart 2007. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS2008", cite:"International Chronostratigraphic Chart 2008. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS2009", cite:"International Chronostratigraphic Chart 2009. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS2010", cite:"International Chronostratigraphic Chart 2010. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS2012", cite:"International Chronostratigraphic Chart 2012. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS201301", cite:"International Chronostratigraphic Chart 2013/01. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS201402", cite:"International Chronostratigraphic Chart 2014/02. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS201410", cite:"International Chronostratigraphic Chart 2014/10. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS201501", cite:"International Chronostratigraphic Chart 2015/01. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS201604", cite:"International Chronostratigraphic Chart 2016/04. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS201610", cite:"International Chronostratigraphic Chart 2016/10. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS201702", cite:"International Chronostratigraphic Chart 2017/02. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS201807", cite:"International Chronostratigraphic Chart 2018/07. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS201808", cite:"International Chronostratigraphic Chart 2018/08. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS201905", cite:"International Chronostratigraphic Chart 2019/05. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS202001", cite:"International Chronostratigraphic Chart 2020/01. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS202003", cite:"International Chronostratigraphic Chart 2020/03. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS202105", cite:"International Chronostratigraphic Chart 2021/05. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS202107", cite:"International Chronostratigraphic Chart 2021/07. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"ICS202202", cite:"International Chronostratigraphic Chart 2022/02. International Commission on Stratigraphy. https://stratigraphy.org"},
+  {id:"GTS2016", cite:"Ogg J G, Ogg G, Gradstein F M. A concise geologic time scale: 2016[M]. Elsevier, 2016."},
+  {id:"GTS2012", cite:"The geologic time scale 2012[M]. elsevier, 2012."},
+  {id:"GTS2008_1", cite:"Ogg J G, Ogg G, Gradstein F M. A concise geologic time scale: 2016[M]. Elsevier, 2016."},
+  {id:"GTS2004", cite:"Ogg J G, Gradstein F M, Smith A G. A geologic time scale 2004[M]. Cambridge University Press, 2004."},
+  {id:"GTS1989", cite:"Harland W B, Armstrong R L, Cox A V, et al. A geologic time scale 1989[M]. Cambridge University Press, 1990."}
 ];
 
+// Auto-assign sequential numbers
+REFERENCES.forEach((r, i) => r.num = i + 1);
+
 // Stats
-const withCite = REFERENCES.filter(r => r.cite !== '—').length;
-const withoutCite = REFERENCES.filter(r => r.cite === '—').length;
-document.getElementById('ref-stats').innerHTML =
-  `<div class="ref-stat"><div class="stat-num">${REFERENCES.length}</div><div class="stat-label">Total</div></div>
-   <div class="ref-stat"><div class="stat-num" style="color:var(--green)">${withCite}</div><div class="stat-label">With Citation</div></div>
-   <div class="ref-stat"><div class="stat-num" style="color:var(--orange)">${withoutCite}</div><div class="stat-label">Placeholder</div></div>`;
+document.getElementById("ref-stats").innerHTML =
+  `<div class="ref-stat"><div class="stat-num">49</div><div class="stat-label" data-i18n="refs.total">Total References</div></div>`;
 
 // Render table
-document.getElementById('ref-tbody').innerHTML = REFERENCES.map(r => {
-  const citeClass = r.cite === '—' ? 'style="color:var(--text-dim);font-style:italic"' : '';
+document.getElementById("ref-tbody").innerHTML = REFERENCES.map(r => {
   return `<tr>
     <td>${r.num}</td>
     <td>${r.id}</td>
-    <td ${citeClass}>${r.cite === '—' ? '— (待补充)' : r.cite}</td>
+    <td>${r.cite}</td>
   </tr>`;
-}).join('');
+}).join("");
+</script>
+
+<script>
+// ====== I18N: English-Chinese title toggle ======
+var I18N_DICT = {
+  en: {
+    "nav.home": "Home",
+    "nav.describe": "Describe",
+    "nav.references": "References",
+    "refs.title": "📚 References · 参考文献",
+    "refs.sub": "网站数据支持所参考的文献资料，涵盖地质年代表研究发展历程中的关键著作",
+    "refs.total": "Total References",
+    "pubs.title": "📝 Publications",
+    "pubs.sub": "Research articles and outputs related to this database"
+  },
+  zh: {
+    "nav.home": "首页",
+    "nav.describe": "描述",
+    "nav.references": "参考文献",
+    "refs.title": "📚 参考文献 · References",
+    "refs.sub": "网站数据支持所参考的文献资料，涵盖地质年代表研究发展历程中的关键著作",
+    "refs.total": "参考文献总数",
+    "pubs.title": "📝 论文发表",
+    "pubs.sub": "与本数据库相关的研究论文与成果"
+  }
+};
+
+window.currentLang = 'en';
+window.toggleLang = function() {
+  var btn = document.getElementById('lang-btn');
+  if (window.currentLang === 'en') {
+    window.currentLang = 'zh';
+    btn.textContent = 'EN';
+    btn.title = 'Switch to English';
+    applyLang('zh');
+    localStorage.setItem('gtskg_lang', 'zh');
+  } else {
+    window.currentLang = 'en';
+    btn.textContent = '中';
+    btn.title = '切换中文';
+    applyLang('en');
+    localStorage.setItem('gtskg_lang', 'en');
+  }
+};
+
+function applyLang(lang) {
+  var dict = I18N_DICT[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key]) el.placeholder = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-title');
+    if (dict[key]) el.title = dict[key];
+  });
+}
+
+(function() {
+  var saved = localStorage.getItem('gtskg_lang');
+  if (saved === 'zh') {
+    window.currentLang = 'en';
+    toggleLang();
+  }
+})();
 </script>
 
 </body>
