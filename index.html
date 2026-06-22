@@ -1500,7 +1500,7 @@ window.toggleValidation = function() {
 // ====== CRETACEOUS EVOLUTION CHART ======
 (function() {
   var container = document.getElementById('cretaceous-chart');
-  var margin = { top: 30, right: 160, bottom: 50, left: 60 };
+  var margin = { top: 70, right: 60, bottom: 50, left: 60 };
 
   function drawChart() {
     var width = container.clientWidth;
@@ -1558,35 +1558,27 @@ window.toggleValidation = function() {
 
     var line = d3.line().x(function(d){return xS(d.year);}).y(function(d){return yS(d.age);}).curve(d3.curveMonotoneX);
 
-    // Sort series by final y-position to space end labels vertically
-    var sorted = series.slice().sort(function(a,b) {
-      var va = a.values, vb = b.values;
-      var aLast = va.length ? va[va.length-1].age : 140;
-      var bLast = vb.length ? vb[vb.length-1].age : 140;
-      return d3.ascending(aLast, bLast);
-    });
-
     series.forEach(function(s) {
-      // Line
       svg.append('path').datum(s.values).attr('fill','none').attr('stroke',s.color)
         .attr('stroke-width',2.5).attr('stroke-opacity',0.85).attr('d',line);
-      // Small dots
       svg.selectAll('dot-'+s.name).data(s.values).enter().append('circle')
         .attr('cx',function(d){return xS(d.year);}).attr('cy',function(d){return yS(d.age);})
         .attr('r',2.5).attr('fill',s.color).attr('stroke','#0a0e14').attr('stroke-width',0.5).attr('opacity',0.7);
     });
 
-    // End-of-line labels on right side, evenly spaced
-    var lx = innerW + 8;
-    var labelSpacing = Math.min(18, innerH / sorted.length);
-    var labelStartY = innerH - (sorted.length - 1) * labelSpacing;
-    if (labelStartY < 0) labelStartY = 0;
-
-    sorted.forEach(function(s, i) {
-      var ly = labelStartY + i * labelSpacing;
+    // Horizontal legend at top, 2 rows of 6
+    var cols = 6, rows = 2, itemW = innerW / cols;
+    series.forEach(function(s, i) {
+      var row = Math.floor(i / cols);
+      var col = i % cols;
+      var lx = col * itemW + 10;
+      var ly = -margin.top + 8 + row * 20;
+      svg.append('rect')
+        .attr('x', lx).attr('y', ly - 4).attr('width', 10).attr('height', 10).attr('rx', 2)
+        .attr('fill', s.color);
       svg.append('text')
-        .attr('x', lx).attr('y', ly + 4)
-        .attr('fill', s.color).attr('font-size', '11px').attr('font-weight', 500)
+        .attr('x', lx + 14).attr('y', ly + 4)
+        .attr('fill', '#8b949e').attr('font-size', '11px')
         .text(s.name);
     });
   }
