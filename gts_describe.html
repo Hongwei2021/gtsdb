@@ -199,9 +199,13 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
   .section { padding: 24px 12px; }
   .etymology-grid { grid-template-columns: 1fr; }
   .header nav { display: none; position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
-    background: var(--bg); flex-direction: column; padding: 16px 24px; gap: 14px;
+    background: var(--bg); flex-direction: column; padding: 8px 0;
     z-index: 999; overflow-y: auto; }
   .header nav.open { display: flex; }
+  .header nav a { display: block; padding: 15px 24px; font-size: 17px;
+    font-weight: 500; color: var(--text-dim); border-bottom: 1px solid var(--border);
+    border-radius: 0; text-decoration: none; transition: background 0.15s; }
+  .header nav a:hover { background: var(--bg-elevated); color: var(--text-bright); }
   .hamburger { display: flex !important; }
 }
 
