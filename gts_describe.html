@@ -50,15 +50,15 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
 .lang-btn:hover { color: var(--text-bright); border-color: var(--accent); }
 .hamburger {
   display: none; flex-direction: column; gap: 5px; cursor: pointer;
-  background: none; border: none; padding: 4px;
+  background: none; border: none; padding: 4px; z-index: 10001; position: relative;
 }
 .hamburger span {
-  display: block; width: 22px; height: 2px; background: var(--text-dim);
+  display: block; width: 22px; height: 2px; background: var(--text-bright);
   border-radius: 2px; transition: all 0.25s;
 }
-.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); background: var(--accent); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); background: var(--accent); }
 [data-i18n] { transition: opacity 0.2s; }
 
 /* Section headers */
@@ -198,14 +198,16 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
   .header h1 { font-size: 17px; }
   .section { padding: 24px 12px; }
   .etymology-grid { grid-template-columns: 1fr; }
-  .header nav { display: none; position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
-    background: var(--bg); flex-direction: column; padding: 8px 0;
-    z-index: 999; overflow-y: auto; }
-  .header nav.open { display: flex; }
-  .header nav a { display: block; padding: 15px 24px; font-size: 17px;
-    font-weight: 500; color: var(--text); border-bottom: 1px solid var(--border);
-    border-radius: 0; text-decoration: none; transition: background 0.15s; }
-  .header nav a:hover { background: var(--bg-elevated); color: var(--text-bright); }
+  .header nav { display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15,20,25,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    flex-direction: column; padding: 72px 0 24px;
+    z-index: 10000; overflow-y: auto;
+    opacity: 0; visibility: hidden; transition: opacity 0.25s, visibility 0.25s; }
+  .header nav.open { opacity: 1; visibility: visible; }
+  .header nav a { display: block; padding: 16px 32px; font-size: 18px;
+    font-weight: 600; color: var(--text-bright); border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-radius: 0; text-decoration: none; transition: background 0.15s, color 0.15s; }
+  .header nav a:hover { background: rgba(99,179,237,0.12); color: var(--accent); }
   .hamburger { display: flex !important; }
 }
 
@@ -215,6 +217,15 @@ footer p { margin: 0 0 6px; font-size: 12px; color: var(--text-dim); }
 footer a { color: var(--accent); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 </style>
+<script>
+window.toggleMenu = function() {
+  var btn = document.getElementById('hamburger');
+  var nav = document.querySelector('.header nav');
+  if (!btn || !nav) return;
+  btn.classList.toggle('open');
+  nav.classList.toggle('open');
+};
+</script>
 </head>
 <body>
 
@@ -613,13 +624,6 @@ function applyLang(lang) {
     toggleLang();
   }
 })();
-
-window.toggleMenu = function() {
-  var btn = document.getElementById('hamburger');
-  var nav = document.querySelector('.header nav');
-  btn.classList.toggle('open');
-  nav.classList.toggle('open');
-};
 
 window.showTimelineModal = function(eventData) {
   document.getElementById('tl-modal-date').textContent = eventData.date_original;

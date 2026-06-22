@@ -50,15 +50,15 @@ nav .links a.active { color: var(--accent); }
 .lang-btn:hover { color: var(--text-bright); border-color: var(--accent); }
 .hamburger {
   display: none; flex-direction: column; gap: 5px; cursor: pointer;
-  background: none; border: none; padding: 4px;
+  background: none; border: none; padding: 4px; z-index: 10001; position: relative;
 }
 .hamburger span {
-  display: block; width: 22px; height: 2px; background: var(--text-dim);
+  display: block; width: 22px; height: 2px; background: var(--text-bright);
   border-radius: 2px; transition: all 0.25s;
 }
-.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); background: var(--accent); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); background: var(--accent); }
 [data-i18n] { transition: opacity 0.2s; }
 
 /* Section layout */
@@ -143,14 +143,16 @@ nav .links a.active { color: var(--accent); }
 /* Mobile */
 @media (max-width: 768px) {
   nav { padding: 0 12px; }
-  nav .links { display: none; position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
-    background: var(--bg); flex-direction: column; padding: 8px 0;
-    z-index: 999; overflow-y: auto; }
-  nav .links.open { display: flex; }
-  nav .links li a { display: block; padding: 15px 24px; font-size: 17px;
-    font-weight: 500; color: var(--text); border-bottom: 1px solid var(--border);
-    text-decoration: none; transition: background 0.15s; }
-  nav .links li a:hover { background: var(--bg-elevated); color: var(--text-bright); }
+  nav .links { display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,14,20,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    flex-direction: column; padding: 72px 0 24px;
+    z-index: 10000; overflow-y: auto;
+    opacity: 0; visibility: hidden; transition: opacity 0.25s, visibility 0.25s; }
+  nav .links.open { opacity: 1; visibility: visible; }
+  nav .links li a { display: block; padding: 16px 32px; font-size: 18px;
+    font-weight: 600; color: var(--text-bright); border-bottom: 1px solid rgba(255,255,255,0.06);
+    text-decoration: none; transition: background 0.15s, color 0.15s; }
+  nav .links li a:hover { background: rgba(68,147,248,0.12); color: var(--accent); }
   .hamburger { display: flex !important; }
   .page { padding: 80px 12px 40px; }
   .ref-table th:nth-child(2), .ref-table td:nth-child(2) { display: none; }
@@ -162,6 +164,15 @@ footer p { margin: 0 0 6px; font-size: 12px; color: var(--text-dim); }
 footer a { color: var(--accent); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 </style>
+<script>
+window.toggleMenu = function() {
+  var btn = document.getElementById('hamburger');
+  var links = document.querySelector('nav .links');
+  if (!btn || !links) return;
+  btn.classList.toggle('open');
+  links.classList.toggle('open');
+};
+</script>
 </head>
 <body>
 
@@ -375,13 +386,6 @@ function applyLang(lang) {
     toggleLang();
   }
 })();
-
-window.toggleMenu = function() {
-  var btn = document.getElementById('hamburger');
-  var links = document.querySelector('nav .links');
-  btn.classList.toggle('open');
-  links.classList.toggle('open');
-};
 </script>
 
 <footer>
