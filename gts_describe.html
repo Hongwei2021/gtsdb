@@ -49,7 +49,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
 }
 .lang-btn:hover { color: var(--text-bright); border-color: var(--accent); }
 .hamburger {
-  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  display: flex; flex-direction: column; gap: 5px; cursor: pointer;
   background: none; border: none; padding: 4px; z-index: 10001; position: relative;
 }
 .hamburger span {
@@ -204,6 +204,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
   .mobile-links { padding: 72px 0 24px; margin: 0; }
   .mobile-links a:hover { background: rgba(99,179,237,0.12) !important; color: var(--accent) !important; }
   .hamburger { display: flex !important; }
+  .header nav { display: none !important; }
 }
 
 /* Footer */
