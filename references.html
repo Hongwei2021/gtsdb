@@ -143,12 +143,11 @@ nav .links a.active { color: var(--accent); }
 /* Mobile */
 @media (max-width: 768px) {
   nav { padding: 0 12px; }
-  nav .links { display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  nav .links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(10,14,20,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     flex-direction: column; padding: 72px 0 24px;
-    z-index: 10000; overflow-y: auto;
-    opacity: 0; visibility: hidden; transition: opacity 0.25s, visibility 0.25s; }
-  nav .links.open { opacity: 1; visibility: visible; }
+    z-index: 10000; overflow-y: auto; }
+  nav .links.open { display: flex; }
   nav .links li a { display: block; padding: 16px 32px; font-size: 18px;
     font-weight: 600; color: var(--text-bright); border-bottom: 1px solid rgba(255,255,255,0.06);
     text-decoration: none; transition: background 0.15s, color 0.15s; }
