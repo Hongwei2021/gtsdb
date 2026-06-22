@@ -1576,22 +1576,14 @@ window.toggleValidation = function() {
         .attr('r',2.5).attr('fill',s.color).attr('stroke','#0a0e14').attr('stroke-width',0.5).attr('opacity',0.7);
     });
 
-    // End-of-line labels spaced evenly to avoid overlap
+    // End-of-line labels on right side, evenly spaced
+    var lx = innerW + 8;
     var labelSpacing = Math.min(18, innerH / sorted.length);
     var labelStartY = innerH - (sorted.length - 1) * labelSpacing;
     if (labelStartY < 0) labelStartY = 0;
 
     sorted.forEach(function(s, i) {
-      var va = s.values;
-      if (!va.length) return;
-      var lastD = va[va.length - 1];
-      var lx = xS(lastD.year) + 10;
       var ly = labelStartY + i * labelSpacing;
-      // Connector line from end point to label
-      svg.append('line')
-        .attr('x1', xS(lastD.year) + 3).attr('y1', yS(lastD.age))
-        .attr('x2', lx - 2).attr('y2', ly)
-        .attr('stroke', s.color).attr('stroke-width', 1).attr('stroke-opacity', 0.6);
       svg.append('text')
         .attr('x', lx).attr('y', ly + 4)
         .attr('fill', s.color).attr('font-size', '11px').attr('font-weight', 500)
