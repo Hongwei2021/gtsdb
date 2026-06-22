@@ -178,8 +178,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
 <!-- ==================== SECTION 1: Etymology ==================== -->
 <section id="etymology" class="section">
   <div class="section-header">
-    <h2 data-i18n="etymology.title">📖 Etymology Explorer · 地质年代词源</h2>
-    <p data-i18n="etymology.sub">ICS 国际年代地层命名溯源 — 每个地质年代名称背后都有一段来自希腊语、拉丁语或地域名称的故事</p>
+    <h2 data-i18n="etymology.title">📖 Etymology Explorer</h2>
+    <p data-i18n="etymology.sub">ICS International Chronostratigraphic Nomenclature — each geologic name has a story rooted in Greek, Latin, or regional toponyms</p>
   </div>
   <div class="etymology-stats" id="etymology-stats"></div>
   <div class="etymology-filters" id="etymology-filters"></div>
@@ -189,11 +189,11 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
 <!-- ==================== SECTION 2: Earth History Timeline ==================== -->
 <section id="timeline" class="section scroll-timeline">
   <div class="section-header">
-    <h2 data-i18n="timeline.title">⏳ Earth History Timeline · 地球历史时间线</h2>
-    <p data-i18n="timeline.sub">从地球诞生 (4540 Ma) 到全新世 (8 ka) 的 135 个关键事件 — 点击节点查看详情，拖动或滚轮缩放</p>
+    <h2 data-i18n="timeline.title">⏳ Earth History Timeline</h2>
+    <p data-i18n="timeline.sub">135 key events from Earth's formation (4540 Ma) to the Holocene (8 ka) — click nodes for details, drag or scroll to zoom</p>
   </div>
   <div class="timeline-controls">
-    <input type="text" class="timeline-search" id="timeline-search" data-i18n-placeholder="timeline.search" placeholder="🔍 搜索事件... (e.g. 'extinction', 'Moon', 'dinosaur')" oninput="filterTimeline()">
+    <input type="text" class="timeline-search" id="timeline-search" data-i18n-placeholder="timeline.search" placeholder="🔍 Search events... (e.g. 'extinction', 'Moon', 'dinosaur')" oninput="filterTimeline()">
     <div class="timeline-zoom">
       <button onclick="zoomTimeline(1.3)" data-i18n-title="timeline.zoom.in" title="Zoom In">🔍+</button>
       <button onclick="zoomTimeline(0.7)" data-i18n-title="timeline.zoom.out" title="Zoom Out">🔍−</button>
@@ -426,8 +426,7 @@ function getEraForMa(ma) {
     });
 
     // Update info
-    document.getElementById('timeline-info').textContent = 
-      `显示 ${filteredEvents.length} / ${events.length} 事件 · 缩放 ${zoomLevel.toFixed(1)}x`;
+    updateTimelineInfo();
     // Scroll to top
     wrap.scrollTop = 0;
   }
@@ -448,6 +447,13 @@ function getEraForMa(ma) {
     document.getElementById('timeline-search').value = '';
     filteredEvents = [...events];
     draw();
+  };
+
+  window.updateTimelineInfo = function() {
+    var dict = I18N_DICT[window.currentLang] || I18N_DICT['en'];
+    var tpl = dict['timeline.info'] || 'Showing {n} / {total} events \u00b7 Zoom {z}x';
+    document.getElementById('timeline-info').textContent =
+      tpl.replace('{n}', filteredEvents.length).replace('{total}', events.length).replace('{z}', zoomLevel.toFixed(1));
   };
 
   draw();
@@ -477,11 +483,12 @@ var I18N_DICT = {
     "nav.refs": "📚 References",
     "nav.etymology": "📖 Etymology",
     "nav.timeline": "⏳ Earth Timeline",
-    "etymology.title": "📖 Etymology Explorer · 地质年代词源",
-    "etymology.sub": "ICS 国际年代地层命名溯源 — 每个地质年代名称背后都有一段来自希腊语、拉丁语或地域名称的故事",
-    "timeline.title": "⏳ Earth History Timeline · 地球历史时间线",
-    "timeline.sub": "从地球诞生 (4540 Ma) 到全新世 (8 ka) 的 135 个关键事件 — 点击节点查看详情，拖动或滚轮缩放",
-    "timeline.search": "🔍 搜索事件... (e.g. 'extinction', 'Moon', 'dinosaur')",
+    "etymology.title": "📖 Etymology Explorer",
+    "etymology.sub": "ICS International Chronostratigraphic Nomenclature — each geologic name has a story rooted in Greek, Latin, or regional toponyms",
+    "timeline.title": "⏳ Earth History Timeline",
+    "timeline.sub": "135 key events from Earth's formation (4540 Ma) to the Holocene (8 ka) — click nodes for details, drag or scroll to zoom",
+    "timeline.search": "🔍 Search events... (e.g. 'extinction', 'Moon', 'dinosaur')",
+    "timeline.info": "Showing {n} / {total} events · Zoom {z}x",
     "timeline.zoom.in": "Zoom In",
     "timeline.zoom.out": "Zoom Out",
     "timeline.zoom.reset": "Reset"
@@ -535,6 +542,7 @@ function applyLang(lang) {
     var key = el.getAttribute('data-i18n-title');
     if (dict[key]) el.title = dict[key];
   });
+  if (typeof updateTimelineInfo === 'function') updateTimelineInfo();
 }
 
 (function() {
