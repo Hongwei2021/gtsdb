@@ -198,15 +198,11 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
   .header h1 { font-size: 17px; }
   .section { padding: 24px 12px; }
   .etymology-grid { grid-template-columns: 1fr; }
-  .header nav { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  .mobile-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(15,20,25,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    flex-direction: column; padding: 72px 0 24px;
     z-index: 10000; overflow-y: auto; }
-  .header nav.open { display: flex; }
-  .header nav a { display: block; padding: 16px 32px; font-size: 18px;
-    font-weight: 600; color: var(--text-bright); border-bottom: 1px solid rgba(255,255,255,0.06);
-    border-radius: 0; text-decoration: none; transition: background 0.15s, color 0.15s; }
-  .header nav a:hover { background: rgba(99,179,237,0.12); color: var(--accent); }
+  .mobile-links { padding: 72px 0 24px; margin: 0; }
+  .mobile-links a:hover { background: rgba(99,179,237,0.12) !important; color: var(--accent) !important; }
   .hamburger { display: flex !important; }
 }
 
@@ -219,10 +215,28 @@ footer a:hover { text-decoration: underline; }
 <script>
 window.toggleMenu = function() {
   var btn = document.getElementById('hamburger');
-  var nav = document.querySelector('.header nav');
-  if (!btn || !nav) return;
-  btn.classList.toggle('open');
-  nav.classList.toggle('open');
+  if (!btn) return;
+  var isOpen = btn.classList.contains('open');
+  if (isOpen) {
+    btn.classList.remove('open');
+    var overlay = document.getElementById('mobileOverlay');
+    if (overlay) overlay.remove();
+    document.body.style.overflow = '';
+  } else {
+    btn.classList.add('open');
+    var overlay = document.createElement('div');
+    overlay.id = 'mobileOverlay';
+    overlay.className = 'mobile-overlay';
+    var headerNav = document.querySelector('.header nav');
+    if (headerNav) overlay.innerHTML = '<div class="mobile-links" style="display:flex;flex-direction:column">' + Array.from(headerNav.querySelectorAll('a')).map(function(a) {
+      return '<a href="' + a.getAttribute('href') + '" style="display:block;padding:16px 32px;font-size:18px;font-weight:600;color:var(--text-bright);border-bottom:1px solid rgba(255,255,255,0.06);text-decoration:none">' + a.textContent + '</a>';
+    }).join('') + '</div>';
+    overlay.onclick = function(e) {
+      if (e.target === overlay) toggleMenu();
+    };
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+  }
 };
 </script>
 </head>

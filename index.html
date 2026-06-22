@@ -224,16 +224,15 @@ footer a { color: var(--accent); text-decoration: none; }
   .stats { gap: 16px; }
   .stat-card { padding: 16px 20px; min-width: 120px; }
   .stat-card .num { font-size: 28px; }
-  nav .links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  .mobile-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(10,14,20,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    flex-direction: column; padding: 72px 0 24px;
     z-index: 10000; overflow-y: auto; }
-  nav .links.open { display: flex; }
-  nav .links li { margin: 0; }
-  nav .links li a { display: block; padding: 16px 32px; font-size: 18px;
+  .mobile-links { list-style: none; padding: 72px 0 24px; margin: 0; }
+  .mobile-links li { margin: 0; }
+  .mobile-links li a { display: block; padding: 16px 32px; font-size: 18px;
     font-weight: 600; color: var(--text-bright); border-bottom: 1px solid rgba(255,255,255,0.06);
-    text-decoration: none; transition: background 0.15s, color 0.15s; }
-  nav .links li a:hover { background: rgba(68,147,248,0.12); color: var(--accent); }
+    text-decoration: none; }
+  .mobile-links li a:hover { background: rgba(68,147,248,0.12); color: var(--accent); }
   .hamburger { display: flex !important; }
   .version-selector { flex-direction: column; align-items: flex-start; }
   .version-selector select { max-width: 100%; width: 100%; }
@@ -518,10 +517,26 @@ footer a { color: var(--accent); text-decoration: none; }
 // Hamburger menu — defined early to avoid D3 errors blocking it
 window.toggleMenu = function() {
   var btn = document.getElementById('hamburger');
-  var links = document.querySelector('nav .links');
-  if (!btn || !links) return;
-  btn.classList.toggle('open');
-  links.classList.toggle('open');
+  if (!btn) return;
+  var isOpen = btn.classList.contains('open');
+  if (isOpen) {
+    btn.classList.remove('open');
+    var overlay = document.getElementById('mobileOverlay');
+    if (overlay) overlay.remove();
+    document.body.style.overflow = '';
+  } else {
+    btn.classList.add('open');
+    var overlay = document.createElement('div');
+    overlay.id = 'mobileOverlay';
+    overlay.className = 'mobile-overlay';
+    var navUl = document.querySelector('nav .links');
+    if (navUl) overlay.innerHTML = '<ul class="mobile-links">' + navUl.innerHTML + '</ul>';
+    overlay.onclick = function(e) {
+      if (e.target === overlay) toggleMenu();
+    };
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+  }
 };
 </script>
 </head>
