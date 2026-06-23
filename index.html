@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GTSKG — Geologic Time Scale Knowledge Graph</title>
+<title>GTSKG — Geologic Time Scale Knowledge Base</title>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <style>
 :root {
@@ -304,7 +304,7 @@ footer a { color: var(--accent); text-decoration: none; }
 .case-code .fn { color:#d2a8ff; }
 .case-code .str { color:#a5d6ff; }
 
-/* Knowledge Graph */
+/* Knowledge Base */
 #kg-viz { width: 100%; height: 700px; position: relative; cursor: grab; }
 #kg-viz:active { cursor: grabbing; }
 #kg-viz .node-label { font-size: 10px; fill: #c5ccd6; pointer-events: none; text-shadow: 0 0 4px rgba(10,14,20,0.9); }
@@ -564,7 +564,7 @@ window.toggleMenu = function() {
 </nav>
 
 <section class="hero">
-  <h1 data-i18n="hero.title">Geologic Time Scale<br><span>Knowledge Graph</span></h1>
+  <h1 data-i18n="hero.title">Geologic Time Scale<br><span>Knowledge Base</span></h1>
   <p data-i18n="hero.desc">
     Interactive visualization of the geologic time scale across 102 versions
     from 1879 to 2024. Post-2000 versions use pyrolite multi-column rendering;
@@ -575,7 +575,7 @@ window.toggleMenu = function() {
     <span class="badge" data-i18n="badge.dual">Dual-Mode View</span>
     <span class="badge" data-i18n="badge.pyrolite">Pyrolite + Classic</span>
     <span class="badge">D3.js</span>
-    <span class="badge" data-i18n="badge.kg">Knowledge Graph</span>
+    <span class="badge" data-i18n="badge.kg">Knowledge Base</span>
     <span class="badge" data-i18n="badge.explorer">Multi-Version Explorer</span>
     <span class="badge" data-i18n="badge.ml">ML Case Study</span>
     <span class="badge" data-i18n="badge.multi">🌐 Multilingual</span>
@@ -638,7 +638,7 @@ window.toggleMenu = function() {
 </section>
 
 <section class="section" id="graph">
-  <h2 class="section-title" data-i18n="section.kg">Version Knowledge Graph</h2>
+  <h2 class="section-title" data-i18n="section.kg">Version Knowledge Base</h2>
   <p class="section-subtitle" data-i18n="section.kg.sub">102 versions connected by 142 citation relationships — click a node to view its time scale</p>
   <div class="card" style="position:relative;">
     <div class="kg-search">
@@ -674,7 +674,7 @@ window.toggleMenu = function() {
 
 <section class="section" id="cases">
   <h2 class="section-title" data-i18n="section.case">Case Study: Table Data Version Identification</h2>
-  <p class="section-subtitle" data-i18n="section.case.sub">Using the GTSKG knowledge graph and machine learning to automatically identify geologic time scale versions in legacy tabular data</p>
+  <p class="section-subtitle" data-i18n="section.case.sub">Using the GTSKG knowledge base and machine learning to automatically identify geologic time scale versions in legacy tabular data</p>
 
   <!-- Overview grid -->
   <div class="case-stats-grid">
@@ -708,7 +708,7 @@ window.toggleMenu = function() {
   <div class="card" style="margin-bottom:24px;">
     <h3 style="margin:0 0 12px;font-size:17px;color:var(--text-bright);" data-i18n="case.background">Background</h3>
     <p style="color:var(--text-dim);line-height:1.7;margin:0 0 12px;">
-      Geological literature often contains tables of fossil or lithology observations with <strong style="color:var(--text-bright)">stratigraphic period/stage names</strong> but rarely specifies which <strong style="color:var(--text-bright)">time scale version</strong> was used. The GTSKG knowledge graph encodes boundary ages for over 100 versions (1879–2024), which can be used as a <strong style="color:var(--accent)">lookup oracle</strong> to match period/stage names to version-specific numeric ages. Combined with spatial (lat/lon) and lithological features, a machine learning model can be trained to <strong style="color:var(--accent)">automatically classify legacy records</strong> into the correct time scale version.
+      Geological literature often contains tables of fossil or lithology observations with <strong style="color:var(--text-bright)">stratigraphic period/stage names</strong> but rarely specifies which <strong style="color:var(--text-bright)">time scale version</strong> was used. The GTSKG knowledge base encodes boundary ages for over 100 versions (1879–2024), which can be used as a <strong style="color:var(--accent)">lookup oracle</strong> to match period/stage names to version-specific numeric ages. Combined with spatial (lat/lon) and lithological features, a machine learning model can be trained to <strong style="color:var(--accent)">automatically classify legacy records</strong> into the correct time scale version.
     </p>
     <div class="case-workflow" id="case-workflow-viz"></div>
   </div>
@@ -939,7 +939,7 @@ pred = clf.predict(test_feat)   # → version assignments for 2,479 test records
 
 
 <footer id="about">
-  <p data-i18n="footer.line1"><strong>GTSKG</strong> — Geologic Time Scale Knowledge Graph &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a></p>
+  <p data-i18n="footer.line1"><strong>GTSKG</strong> — Geologic Time Scale Knowledge Base &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a></p>
   <p style="margin-top:4px; font-size:13px;" data-i18n="footer.line1b">
     Data &amp; Source: <a href="https://github.com/Hongwei2021/gtsdb" target="_blank">GitHub</a> &nbsp;(hongwei2021/gtsdb)
   </p>
@@ -2332,12 +2332,12 @@ var I18N_DICT = {
     "nav.query": "🔍 Query",
     "nav.references": "📚 References",
     // Hero
-    "hero.title": "Geologic Time Scale<br><span>Knowledge Graph</span>",
+    "hero.title": "Geologic Time Scale<br><span>Knowledge Base</span>",
     "hero.desc": "Interactive visualization of the geologic time scale across 102 versions from 1879 to 2024. Post-2000 versions use pyrolite multi-column rendering; pre-2000 versions use classic stacked-column charts. Automatic data validation and correction included.",
     // Badges
     "badge.dual": "Dual-Mode View",
     "badge.pyrolite": "Pyrolite + Classic",
-    "badge.kg": "Knowledge Graph",
+    "badge.kg": "Knowledge Base",
     "badge.explorer": "Multi-Version Explorer",
     "badge.ml": "ML Case Study",
     "badge.multi": "🌐 Multilingual",
@@ -2351,12 +2351,12 @@ var I18N_DICT = {
     "section.timescale.sub": "Select a version — post-2000 uses pyrolite multi-column view, pre-2000 uses classic stacked column",
     "section.validation": "Data Validation",
     "section.validation.sub": "Automatic detection and correction of data anomalies",
-    "section.kg": "Version Knowledge Graph",
+    "section.kg": "Version Knowledge Base",
     "section.kg.sub": "102 versions connected by 142 citation relationships — click a node to view its time scale",
     "section.evolution": "Boundary Age Evolution",
     "section.evolution.sub": "How Cretaceous stage boundary ages have changed across ICS versions (2008–2021)",
     "section.case": "Case Study: Table Data Version Identification",
-    "section.case.sub": "Using the GTSKG knowledge graph and machine learning to automatically identify geologic time scale versions in legacy tabular data",
+    "section.case.sub": "Using the GTSKG knowledge base and machine learning to automatically identify geologic time scale versions in legacy tabular data",
     "section.explorer": "Data Explorer",
     "section.explorer.sub": "Browse and search geologic time scale data by version",
     "section.lang": "🌐 Multilingual Geologic Time Scale",
@@ -2367,7 +2367,7 @@ var I18N_DICT = {
     "validation.detail": "Swaps Detail (start &lt; end → automatically swapped)",
     // Version selector
     "version.label": "Version:",
-    // Knowledge Graph
+    // Knowledge Base
     "kg.search": "Search version...",
     "kg.zoom.in": "Zoom in",
     "kg.zoom.out": "Zoom out",
@@ -2433,7 +2433,7 @@ var I18N_DICT = {
     "lang.th.end": "End (Ma)",
     "lang.th.duration": "Duration (Ma)",
     // Footer
-    "footer.line1": '<strong>GTSKG</strong> — Geologic Time Scale Knowledge Graph &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a>',
+    "footer.line1": '<strong>GTSKG</strong> — Geologic Time Scale Knowledge Base &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a>',
     "footer.line1b": 'Data &amp; Source: <a href="https://github.com/Hongwei2021/gtsdb" target="_blank">GitHub</a> &nbsp;(hongwei2021/gtsdb)',
     "footer.line2": 'Reference Sites: <a href="https://stratigraphy.org" target="_blank">ICS</a> · <a href="https://timescalecreator.org" target="_blank">TSCreator</a>',
     "footer.line3": 'Visualization adapted from <a href="https://pyrolite.readthedocs.io/">pyrolite</a>'
@@ -2443,7 +2443,7 @@ var I18N_DICT = {
     "nav.timescale": "时间表",
     "nav.validation": "数据验证",
     "nav.cases": "案例研究",
-    "nav.graph": "知识图谱",
+    "nav.graph": "知识库",
     "nav.evolution": "年代演化",
     "nav.explorer": "数据浏览器",
     "nav.languages": "🌐 多语言",
@@ -2451,12 +2451,12 @@ var I18N_DICT = {
     "nav.query": "🔍 查询",
     "nav.references": "📚 参考文献",
     // Hero
-    "hero.title": "地质年代表<br><span>知识图谱</span>",
+    "hero.title": "地质年代表<br><span>知识库</span>",
     "hero.desc": "102个地质年代表版本（1879–2024）的交互式可视化。2000年后版本采用pyrolite多列渲染，2000年前版本采用经典单列堆叠柱状图。包含自动数据验证与修正功能。",
     // Badges
     "badge.dual": "双模式视图",
     "badge.pyrolite": "Pyrolite + 经典",
-    "badge.kg": "知识图谱",
+    "badge.kg": "知识库",
     "badge.explorer": "多版本浏览",
     "badge.ml": "机器学习案例",
     "badge.multi": "🌐 多语言",
@@ -2470,12 +2470,12 @@ var I18N_DICT = {
     "section.timescale.sub": "选择版本 — 2000年后使用pyrolite多列视图，2000年前使用经典单列堆叠",
     "section.validation": "数据验证",
     "section.validation.sub": "自动检测与修正数据异常",
-    "section.kg": "版本知识图谱",
+    "section.kg": "版本知识库",
     "section.kg.sub": "102个版本通过142条引用关系关联 — 点击节点查看对应年代表",
     "section.evolution": "界线年龄演化",
     "section.evolution.sub": "白垩纪各阶界线年龄在ICS各版本中的变化（2008–2021）",
     "section.case": "案例研究：表格数据版本识别",
-    "section.case.sub": "利用GTSKG知识图谱和机器学习自动识别遗留表格数据中的地质年代表版本",
+    "section.case.sub": "利用GTSKG知识库和机器学习自动识别遗留表格数据中的地质年代表版本",
     "section.explorer": "数据浏览器",
     "section.explorer.sub": "按版本浏览和搜索地质年代表数据",
     "section.lang": "🌐 多语言地质年代表",
@@ -2486,7 +2486,7 @@ var I18N_DICT = {
     "validation.detail": "互换详情（起始值 &lt; 结束值 → 自动交换）",
     // Version selector
     "version.label": "版本：",
-    // Knowledge Graph
+    // Knowledge Base
     "kg.search": "搜索版本...",
     "kg.zoom.in": "放大",
     "kg.zoom.out": "缩小",
@@ -2517,7 +2517,7 @@ var I18N_DICT = {
     "case.methodology": "方法",
     "case.step1.title": "原始数据解析",
     "case.step1.desc": "解析Excel记录，包括纪、阶、LMU、岩性、经纬度、国家、大洲和出版年份",
-    "case.step2.title": "知识图谱界线查询",
+    "case.step2.title": "知识库界线查询",
     "case.step2.desc": "按版本+纪/阶名称查询GTSKG TTL文件，获取数值年龄界线和不确定性",
     "case.step3.title": "特征编码",
     "case.step3.desc": "对分类特征（国家、大洲、LMU、纪、阶、岩性）进行标签编码；KNN填补缺失值",
@@ -2552,7 +2552,7 @@ var I18N_DICT = {
     "lang.th.end": "结束 (Ma)",
     "lang.th.duration": "时长 (Ma)",
     // Footer
-    "footer.line1": '<strong>GTSKG</strong> — 地质年代知识图谱 &nbsp;·&nbsp; 基于 <a href="https://d3js.org">D3.js</a> 构建',
+    "footer.line1": '<strong>GTSKG</strong> — 地质年代知识库 &nbsp;·&nbsp; 基于 <a href="https://d3js.org">D3.js</a> 构建',
     "footer.line1b": '数据与源码: <a href="https://github.com/Hongwei2021/gtsdb" target="_blank">GitHub</a> &nbsp;(hongwei2021/gtsdb)',
     "footer.line2": '重要参考网站: <a href="https://stratigraphy.org" target="_blank">ICS</a> · <a href="https://timescalecreator.org" target="_blank">TSCreator</a>',
     "footer.line3": '可视化改编自 <a href="https://pyrolite.readthedocs.io/">pyrolite</a>'
