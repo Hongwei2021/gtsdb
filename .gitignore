@@ -15,6 +15,11 @@ chinese_versions_js.js
 gts_describe_data.json
 gts_describe_js.js
 case_mapping_table.json
+generate_query_html.py
+inline_data.js
+inline_meta.js
+gts_versions_list.md
+site_description_academic.txt
 
 # IDE
 .vscode/
