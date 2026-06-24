@@ -290,53 +290,121 @@ function renderChart(data,isCompact){
   const tot=data.maxAge-data.minAge||1;
   const m={t:24,r:isCompact?70:90,b:44,l:isCompact?44:54};
   const w=540,pad=isCompact?8:6;
-
-  // Count hierarchical items
-  function countItems(items){
-    let n=0;items.forEach(it=>{n++;if(it.children)n+=countItems(it.children);});return n;
-  }
-  const nItems=countItems(h);
-
-  // Dynamic scale: time-proportional with guaranteed minimum height per item
   const minItemH=isCompact?14:18;
-  const PADDING_H=isCompact?2:4;
+  const itemGap=isCompact?1:3;
   const legendH=28;
-  const timeChartH=Math.max(tot*1.6, nItems*(minItemH+PADDING_H), 360);
-  const chartH=timeChartH;
+
+  // Flatten hierarchy with depth
+  const flat=[];
+  function flatten(items,depth){
+    items.forEach(it=>{flat.push({...it,depth});if(it.children)flatten(it.children,depth+1);});
+  }
+  flatten(h,0);
+  if(flat.length===0)return '<svg></svg>';
+
+  // Scale: time-proportional, guaranteed enough vertical room per item
+  const pxPerMa=Math.max(2.0, flat.length/tot*(minItemH+itemGap)*1.15);
+  let chartH=Math.max(tot*pxPerMa, 400);
+  let t2y=a=>m.t+(data.maxAge-a)/tot*chartH;
+
+  // Sort by depth, then by beg descending (oldest first)
+  flat.sort((a,b)=>a.depth-b.depth||b.beg-a.beg);
+
+  // Resolve collisions: items at same depth cannot overlap
+  const maxDepth=Math.max(...flat.map(f=>f.depth));
+  for(let d=0;d<=maxDepth;d++){
+    const row=flat.filter(f=>f.depth===d);
+    for(let i=1;i<row.length;i++){
+      const prev=row[i-1];
+      const cur=row[i];
+      const prevY2=Math.max(t2y(prev.end), t2y(prev.beg)+minItemH);
+      const curY1=t2y(cur.beg);
+      if(curY1<prevY2+itemGap){
+        const dy=prevY2+itemGap-curY1;
+        cur._shift=(cur._shift||0)+dy;
+      }
+    }
+  }
+
+  // Apply shifts and find real max Y
+  let maxY=m.t;
+  flat.forEach(f=>{
+    const y1=t2y(f.beg)+(f._shift||0);
+    const y2=Math.max(t2y(f.end)+(f._shift||0), y1+minItemH);
+    f._y1=y1;f._y2=y2;
+    if(y2>maxY)maxY=y2;
+  });
+
+  // Expand chart if shifts pushed items beyond original bounds
+  if(maxY>m.t+chartH)chartH=maxY-m.t+20;
+  t2y=a=>m.t+(data.maxAge-a)/tot*chartH;
+
+  // Re-resolve with final scale
+  flat.sort((a,b)=>a.depth-b.depth||b.beg-a.beg);
+  for(let d=0;d<=maxDepth;d++){
+    const row=flat.filter(f=>f.depth===d);
+    for(let i=1;i<row.length;i++){
+      const prev=row[i-1];
+      const cur=row[i];
+      const prevY2=Math.max(t2y(prev.end), t2y(prev.beg)+minItemH);
+      const curY1=t2y(cur.beg);
+      if(curY1<prevY2+itemGap){
+        const dy=prevY2+itemGap-curY1;
+        cur._shift=(cur._shift||0)+dy;
+      }
+    }
+  }
+  maxY=m.t;
+  flat.forEach(f=>{
+    const y1=t2y(f.beg)+(f._shift||0);
+    const y2=Math.max(t2y(f.end)+(f._shift||0), y1+minItemH);
+    f._y1=y1;f._y2=y2;
+    if(y2>maxY)maxY=y2;
+  });
+  chartH=maxY-m.t+20;
+
   const svgW=w,svgH=m.t+chartH+m.b+legendH;
-  const t2y=a=>m.t+(data.maxAge-a)/tot*chartH;
+  t2y=a=>m.t+(data.maxAge-a)/tot*chartH;
 
   let s=`<svg viewBox="0 0 ${svgW} ${svgH}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:var(--font)">`;
 
-  // Grid lines every 50 Ma or finer
+  // Grid lines
   const step=tot>200?50:tot>100?25:tot>50?10:5;
   for(let ma=Math.floor(data.minAge/step)*step;ma<=data.maxAge;ma+=step){
     const y=t2y(ma);
     s+=`<line x1="${m.l}" y1="${y}" x2="${w-m.r}" y2="${y}" stroke="var(--border)" stroke-width="0.5" opacity="0.6"/>`;
     s+=`<text x="${m.l-pad}" y="${y+3}" text-anchor="end" font-size="${isCompact?8:9}" fill="var(--text-dim)">${ma}</text>`;
   }
-  // Axis line
   s+=`<line x1="${m.l}" y1="${m.t}" x2="${m.l}" y2="${m.t+chartH}" stroke="var(--text-dim)" stroke-width="1"/>`;
 
+  // Draw collision-resolved items
+  const colMap={};
   function draw(item,depth){
+    const key=item.name+'_'+depth;
     const col=ageColor(item.beg,item.end);
-    const y1=t2y(item.beg),y2=t2y(item.end);
-    const th=Math.max(y2-y1,minItemH);
+    const th=Math.max(t2y(item.end)-t2y(item.beg), minItemH);
+    const y1=t2y(item.beg)+(item._shift||0);
     const x=m.l+depth*(isCompact?14:16);
     const bw=(w-m.r)-depth*(isCompact?14:16);
-    const fontSize=isCompact?(item.rank==='Epoch'?9:8):(item.rank==='Epoch'?11:10);
+    const fs=isCompact?(item.rank==='Epoch'?9:8):(item.rank==='Epoch'?11:10);
 
-    s+=`<rect x="${x}" y="${y1}" width="${bw}" height="${th}" rx="3" fill="${col[0]}" stroke="${col[1]}" stroke-width="0.8" opacity="${item.rank==='Epoch'?'1':'0.8'}"/>`;
+    s+=`<rect x="${x}" y="${y1}" width="${bw}" height="${th}" rx="3" fill="${col[0]}" stroke="${col[1]}" stroke-width="0.8" opacity="${item.rank==='Epoch'?'1':'0.85'}"/>`;
     if(item.rank==='Epoch')s+=`<rect x="${x}" y="${y1}" width="3" height="${th}" fill="${col[1]}" rx="1"/>`;
     if(th>=12){
-      s+=`<text x="${x+5}" y="${y1+th/2+1}" font-size="${fontSize}" font-weight="${item.rank==='Epoch'?600:400}" fill="${col[2]}" dominant-baseline="middle">${item.name}</text>`;
+      s+=`<text x="${x+5}" y="${y1+th/2+1}" font-size="${fs}" font-weight="${item.rank==='Epoch'?600:400}" fill="${col[2]}" dominant-baseline="middle">${item.name}</text>`;
       if(th>=18)s+=`<text x="${x+bw-4}" y="${y1+th/2+1}" font-size="${isCompact?7:9}" fill="${col[2]}" opacity="0.65" text-anchor="end" dominant-baseline="middle">${item.beg}-${item.end}</text>`;
     }
-    if(item.children)item.children.forEach(c=>draw(c,depth+1));
+    // Find matching children from flat that belong to this parent
+    if(item.children){
+      item.children.forEach(c=>{
+        const match=flat.find(f=>f.name===c.name&&f.beg===c.beg&&f.end===c.end&&f.depth===depth+1);
+        if(match)draw(match,depth+1);
+      });
+    }
   }
   h.forEach(it=>draw(it,0));
 
-  // Legend at bottom
+  // Legend
   const ly=m.t+chartH+m.b;
   const sys=[['Cz',0,66],['K',66,145],['J',145,201],['T',201,252],['P',252,299],['C',299,359],['D',359,419],['S',419,444],['O',444,485],['Cm',485,541]];
   sys.forEach((ss,i)=>{
