@@ -24,3 +24,12 @@ site_description_academic.txt
 # IDE
 .vscode/
 .idea/
+
+# Manuscript & personal research data (local only)
+Manuscript_*.docx
+build_marked_manuscript.py
+screenshots/
+outputs/
+.playwright-cli/
+.claude/
+data/boundary_ages.json
