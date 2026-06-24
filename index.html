@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GTSKG — Geologic Time Scale Knowledge Base</title>
+<title>GTSKB — Geologic Time Scale Knowledge Base</title>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <style>
 :root {
@@ -675,7 +675,7 @@ window.toggleMenu = function() {
 
 <section class="section" id="cases">
   <h2 class="section-title" data-i18n="section.case">Case Study: Table Data Version Identification</h2>
-  <p class="section-subtitle" data-i18n="section.case.sub">Using the GTSKG knowledge base and machine learning to automatically identify geologic time scale versions in legacy tabular data</p>
+  <p class="section-subtitle" data-i18n="section.case.sub">Using the GTSKB knowledge base and machine learning to automatically identify geologic time scale versions in legacy tabular data</p>
 
   <!-- Overview grid -->
   <div class="case-stats-grid">
@@ -709,7 +709,7 @@ window.toggleMenu = function() {
   <div class="card" style="margin-bottom:24px;">
     <h3 style="margin:0 0 12px;font-size:17px;color:var(--text-bright);" data-i18n="case.background">Background</h3>
     <p style="color:var(--text-dim);line-height:1.7;margin:0 0 12px;">
-      Geological literature often contains tables of fossil or lithology observations with <strong style="color:var(--text-bright)">stratigraphic period/stage names</strong> but rarely specifies which <strong style="color:var(--text-bright)">time scale version</strong> was used. The GTSKG knowledge base encodes boundary ages for over 100 versions (1879–2024), which can be used as a <strong style="color:var(--accent)">lookup oracle</strong> to match period/stage names to version-specific numeric ages. Combined with spatial (lat/lon) and lithological features, a machine learning model can be trained to <strong style="color:var(--accent)">automatically classify legacy records</strong> into the correct time scale version.
+      Geological literature often contains tables of fossil or lithology observations with <strong style="color:var(--text-bright)">stratigraphic period/stage names</strong> but rarely specifies which <strong style="color:var(--text-bright)">time scale version</strong> was used. The GTSKB knowledge base encodes boundary ages for over 100 versions (1879–2024), which can be used as a <strong style="color:var(--accent)">lookup oracle</strong> to match period/stage names to version-specific numeric ages. Combined with spatial (lat/lon) and lithological features, a machine learning model can be trained to <strong style="color:var(--accent)">automatically classify legacy records</strong> into the correct time scale version.
     </p>
     <div class="case-workflow" id="case-workflow-viz"></div>
   </div>
@@ -755,7 +755,7 @@ window.toggleMenu = function() {
       <div class="method-step">
         <div class="method-step-num">2</div>
         <div class="method-step-title" data-i18n="case.step2.title">KG Boundary Lookup</div>
-        <div class="method-step-desc" data-i18n="case.step2.desc">Query GTSKG TTL files by version + period/stage name to retrieve numeric age boundaries and uncertainties</div>
+        <div class="method-step-desc" data-i18n="case.step2.desc">Query GTSKB TTL files by version + period/stage name to retrieve numeric age boundaries and uncertainties</div>
       </div>
       <div class="method-step">
         <div class="method-step-num">3</div>
@@ -940,7 +940,7 @@ pred = clf.predict(test_feat)   # → version assignments for 2,479 test records
 
 
 <footer id="about">
-  <p data-i18n="footer.line1"><strong>GTSKG</strong> — Geologic Time Scale Knowledge Base &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a></p>
+  <p data-i18n="footer.line1"><strong>GTSKB</strong> — Geologic Time Scale Knowledge Base &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a></p>
   <p style="margin-top:4px; font-size:13px;" data-i18n="footer.line1b">
     Data &amp; Source: <a href="https://github.com/Hongwei2021/gtsdb" target="_blank">GitHub</a> &nbsp;(hongwei2021/gtsdb)
   </p>
@@ -2358,7 +2358,7 @@ var I18N_DICT = {
     "section.evolution": "Boundary Age Evolution",
     "section.evolution.sub": "How Cretaceous stage boundary ages have changed across ICS versions (2008–2021)",
     "section.case": "Case Study: Table Data Version Identification",
-    "section.case.sub": "Using the GTSKG knowledge base and machine learning to automatically identify geologic time scale versions in legacy tabular data",
+    "section.case.sub": "Using the GTSKB knowledge base and machine learning to automatically identify geologic time scale versions in legacy tabular data",
     "section.explorer": "Data Explorer",
     "section.explorer.sub": "Browse and search geologic time scale data by version",
     "section.lang": "🌐 Multilingual Geologic Time Scale",
@@ -2401,7 +2401,7 @@ var I18N_DICT = {
     "case.step1.title": "Raw Data Parsing",
     "case.step1.desc": "Parse Excel records with Period, Stage, LMU, Lithology, Lat/Lon, Country, Continent, and Publication Year",
     "case.step2.title": "KG Boundary Lookup",
-    "case.step2.desc": "Query GTSKG TTL files by version + period/stage name to retrieve numeric age boundaries and uncertainties",
+    "case.step2.desc": "Query GTSKB TTL files by version + period/stage name to retrieve numeric age boundaries and uncertainties",
     "case.step3.title": "Feature Encoding",
     "case.step3.desc": "Label-encode categorical features (Country, Continent, LMU, Period, Stage, Lithology); KNN-impute missing values",
     "case.step4.title": "ML Classification",
@@ -2435,7 +2435,7 @@ var I18N_DICT = {
     "lang.th.end": "End (Ma)",
     "lang.th.duration": "Duration (Ma)",
     // Footer
-    "footer.line1": '<strong>GTSKG</strong> — Geologic Time Scale Knowledge Base &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a>',
+    "footer.line1": '<strong>GTSKB</strong> — Geologic Time Scale Knowledge Base &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a>',
     "footer.line1b": 'Data &amp; Source: <a href="https://github.com/Hongwei2021/gtsdb" target="_blank">GitHub</a> &nbsp;(hongwei2021/gtsdb)',
     "footer.line2": 'Reference Sites: <a href="https://stratigraphy.org" target="_blank">ICS</a> · <a href="https://timescalecreator.org" target="_blank">TSCreator</a>',
     "footer.line3": 'Visualization adapted from <a href="https://pyrolite.readthedocs.io/">pyrolite</a>'
@@ -2478,7 +2478,7 @@ var I18N_DICT = {
     "section.evolution": "界线年龄演化",
     "section.evolution.sub": "白垩纪各阶界线年龄在ICS各版本中的变化（2008–2021）",
     "section.case": "案例研究：表格数据版本识别",
-    "section.case.sub": "利用GTSKG知识库和机器学习自动识别遗留表格数据中的地质年代表版本",
+    "section.case.sub": "利用GTSKB知识库和机器学习自动识别遗留表格数据中的地质年代表版本",
     "section.explorer": "数据浏览器",
     "section.explorer.sub": "按版本浏览和搜索地质年代表数据",
     "section.lang": "🌐 多语言地质年代表",
@@ -2521,7 +2521,7 @@ var I18N_DICT = {
     "case.step1.title": "原始数据解析",
     "case.step1.desc": "解析Excel记录，包括纪、阶、LMU、岩性、经纬度、国家、大洲和出版年份",
     "case.step2.title": "知识库界线查询",
-    "case.step2.desc": "按版本+纪/阶名称查询GTSKG TTL文件，获取数值年龄界线和不确定性",
+    "case.step2.desc": "按版本+纪/阶名称查询GTSKB TTL文件，获取数值年龄界线和不确定性",
     "case.step3.title": "特征编码",
     "case.step3.desc": "对分类特征（国家、大洲、LMU、纪、阶、岩性）进行标签编码；KNN填补缺失值",
     "case.step4.title": "机器学习分类",
@@ -2555,7 +2555,7 @@ var I18N_DICT = {
     "lang.th.end": "结束 (Ma)",
     "lang.th.duration": "时长 (Ma)",
     // Footer
-    "footer.line1": '<strong>GTSKG</strong> — 地质年代知识库 &nbsp;·&nbsp; 基于 <a href="https://d3js.org">D3.js</a> 构建',
+    "footer.line1": '<strong>GTSKB</strong> — Geologic Time Scale Knowledge Base &nbsp;·&nbsp; 基于 <a href="https://d3js.org">D3.js</a> 构建',
     "footer.line1b": '数据与源码: <a href="https://github.com/Hongwei2021/gtsdb" target="_blank">GitHub</a> &nbsp;(hongwei2021/gtsdb)',
     "footer.line2": '重要参考网站: <a href="https://stratigraphy.org" target="_blank">ICS</a> · <a href="https://timescalecreator.org" target="_blank">TSCreator</a>',
     "footer.line3": '可视化改编自 <a href="https://pyrolite.readthedocs.io/">pyrolite</a>'

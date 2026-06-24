@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GTSKG - Boundary Age Query</title>
+<title>GTSKB - Boundary Age Query</title>
 <style>
 :root {
   --bg: #0d1117;
@@ -114,21 +114,23 @@ footer hr { margin: 18px auto 14px; border: none; border-top: 1px solid var(--bo
 <!-- Header -->
 <div class="header">
   <div class="header-left">
-    <a href="index.html" class="logo">GTSKG</a>
+    <a href="index.html" class="logo">GTSKB</a>
     <nav class="nav">
-      <a href="index.html">Knowledge Graph</a>
+      <a href="index.html">Knowledge Base</a>
       <a href="gts_describe.html">GTS Describe</a>
       <a href="query.html" class="active">Query</a>
       <a href="regional.html">Regional</a>
+      <a href="references.html">References</a>
     </nav>
   </div>
   <button class="hamburger" onclick="toggleMobileNav()">&#9776;</button>
 </div>
 <nav class="mobile-nav" id="mobileNav">
-  <a href="index.html">Knowledge Graph</a>
+  <a href="index.html">Knowledge Base</a>
   <a href="gts_describe.html">GTS Describe</a>
   <a href="query.html" class="active">Query</a>
   <a href="regional.html">Regional</a>
+  <a href="references.html">References</a>
 </nav>
 
 <!-- Main -->
@@ -178,7 +180,7 @@ footer hr { margin: 18px auto 14px; border: none; border-top: 1px solid var(--bo
 </div>
 
 <footer>
-  <p><strong>GTSKG</strong> — Geologic Time Scale Knowledge Graph &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a></p>
+  <p><strong>GTSKB</strong> — Geologic Time Scale Knowledge Base &nbsp;·&nbsp; Built with <a href="https://d3js.org">D3.js</a></p>
   <p style="margin-top:4px; font-size:13px;">
     Data &amp; Source: <a href="https://github.com/Hongwei2021/gtsdb" target="_blank">GitHub</a> &nbsp;(hongwei2021/gtsdb)
   </p>
@@ -196,7 +198,7 @@ footer hr { margin: 18px auto 14px; border: none; border-top: 1px solid var(--bo
 <!-- Load D3 from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 <!-- Load data -->
-<script src="data/boundary_ages.js"></script>
+<script src="inline_data.js"></script>
 
 <script>
 // ============ State ============
@@ -206,10 +208,8 @@ let chartDrawn = false;
 
 // ============ Initialize ============
 function init() {
-  console.log('init called');
-  console.log('window.__GTSKG_DATA__ exists:', typeof window.__GTSKG_DATA__ !== 'undefined');
   if (typeof window.__GTSKG_DATA__ === 'undefined') {
-    alert('Data not loaded. Please check that data/boundary_ages.js exists.');
+    document.getElementById('versionGrid').innerHTML = '<div style="color:var(--red);padding:12px">Data loading failed. Please refresh the page.</div>';
     return;
   }
   renderVersionGrid();
@@ -345,13 +345,12 @@ function updateQueryButton() {
 
 // ============ Run Query / Chart ============
 function runQuery() {
-  console.log('runQuery called');
   if (selectedBoundaries.length === 0 || selectedVersions.length === 0) {
     alert('Please select at least one boundary and one version.');
     return;
   }
   if (!window.__GTSKG_DATA__) {
-    alert('Data not loaded.');
+    document.getElementById('chartContainer').innerHTML = '<div class="no-data" style="color:var(--red)">Data not available. Please refresh the page.</div>';
     return;
   }
   drawChart();
